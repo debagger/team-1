@@ -1,0 +1,47 @@
+{
+  "name": "core",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Mikhail Sokolov <debagger@gmail.com>",
+  "homepage": "https://github.com/debagger/team-1#readme",
+  "license": "MIT",
+  "main": "dist/core.js",
+  "types": "dist/core.d.ts",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debagger/team-1.git"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@iconify/react": "^4.0.0",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/lab": "^5.0.0-alpha.104",
+    "@mui/material": "^5.10.10",
+    "@sweet-monads/either": "^3.1.0",
+    "@types/recharts": "^1.8.23",
+    "formik": "^2.2.9",
+    "framer-motion": "^7.6.1",
+    "react-router-dom": "^6.4.2",
+    "react-svg-timeline": "^0.23.4",
+    "recharts": "^2.1.15",
+    "tslib": "^2.4.0",
+    "types": "*",
+    "typescript": "^4.8.4",
+    "yup": "^0.32.11"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node ./__tests__/core.test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/debagger/team-1/issues"
+  }
+}
