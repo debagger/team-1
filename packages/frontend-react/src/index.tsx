@@ -9,6 +9,7 @@ import ErrorPage from "./pages/error-page";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import Orders from "./pages/orders";
+import Signup from "./pages/signup";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <Login setAuth={(...args: any[]) => console.log(args)} />,
+  },
+  {
+    path: "signup",
+    element: <Signup  setAuth={(...args: any[]) => console.log(args)}/>,
   },
 ]);
 
