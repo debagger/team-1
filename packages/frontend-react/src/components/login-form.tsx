@@ -37,9 +37,9 @@ const LoginForm = ({ setAuth }: { setAuth: any }) => {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Provide a valid email address")
-      .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+      .email("Электронная почта должна быть действительным адресом")
+      .required("Укажите адрес электронной почты"),
+    password: Yup.string().required("Укажите пароль"),
   });
 
   const formik = useFormik({
@@ -87,7 +87,7 @@ const LoginForm = ({ setAuth }: { setAuth: any }) => {
               fullWidth
               autoComplete="username"
               type="email"
-              label="Email Address"
+              label="Электронная почта"
               {...getFieldProps("email")}
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}
@@ -97,7 +97,7 @@ const LoginForm = ({ setAuth }: { setAuth: any }) => {
               fullWidth
               autoComplete="current-password"
               type={showPassword ? "text" : "password"}
-              label="Password"
+              label="Пароль"
               {...getFieldProps("password")}
               error={Boolean(touched.password && errors.password)}
               helperText={touched.password && errors.password}
@@ -137,7 +137,7 @@ const LoginForm = ({ setAuth }: { setAuth: any }) => {
                     checked={values.remember}
                   />
                 }
-                label="Remember me"
+                label="Запомнить меня"
               />
 
               <Link
@@ -146,7 +146,7 @@ const LoginForm = ({ setAuth }: { setAuth: any }) => {
                 to="#"
                 underline="hover"
               >
-                Forgot password?
+                Забыли пароль?
               </Link>
             </Stack>
 
@@ -157,7 +157,7 @@ const LoginForm = ({ setAuth }: { setAuth: any }) => {
               variant="contained"
               loading={isSubmitting}
             >
-              {isSubmitting ? "loading..." : "Login"}
+              {isSubmitting ? "Вход..." : "Вход"}
             </LoadingButton>
           </Box>
         </Box>

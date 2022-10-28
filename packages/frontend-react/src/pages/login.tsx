@@ -54,7 +54,7 @@ const Login = ({ setAuth }: { setAuth: any }) => {
           <HeadingStyle component={motion.div} {...fadeInUp}>
             <Logo />
             <Typography sx={{ color: "text.secondary", mb: 5 }}>
-              Login to your account
+              Войти с помощью
             </Typography>
           </HeadingStyle>
 
@@ -64,7 +64,7 @@ const Login = ({ setAuth }: { setAuth: any }) => {
 
           <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              OR
+              Или
             </Typography>
           </Divider>
 
@@ -77,9 +77,9 @@ const Login = ({ setAuth }: { setAuth: any }) => {
             align="center"
             sx={{ mt: 3 }}
           >
-            Don’t have an account?{" "}
+            Еще нет учетной записи?{" "}
             <Link variant="subtitle2" component={RouterLink} to="/signup">
-              Sign up
+              Регистрация
             </Link>
           </Typography>
         </ContentStyle>
