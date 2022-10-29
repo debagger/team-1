@@ -1,3 +1,5 @@
+import { IUser } from './IUser'
+
 export interface IUserApi {
-    register()
+    getUser(email: string): Promise<IUser>
 }

@@ -1,0 +1,18 @@
+name: React app deploy to pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Deploy react app to github pages
+      uses: ./.github/actions/deploy-to-pages-action
