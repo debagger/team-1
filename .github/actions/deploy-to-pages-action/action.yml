@@ -16,9 +16,7 @@ runs:
       shell: bash
     - run : git config user.email github-actions@github.com
       shell: bash
-    - run : git worktree add build
-      shell: bash
-    - run : git --work-tree build add --all
+    - run : git add --force ./packages/frontend-react/build
       shell: bash
     - run : git commit -m "Automatic Deploy action run by github-actions"
       shell: bash
