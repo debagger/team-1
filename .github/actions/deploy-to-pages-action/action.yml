@@ -8,9 +8,7 @@ branding:
 runs: 
   using: 'composite'
   steps: 
-    - run : cd ./packages/frontend-react/ && npm i
-      shell: bash
-    - run : cd ./packages/frontend-react/ && npm ci
+    - run : npx lerna bootstrap
       shell: bash
     - run : cd ./packages/frontend-react/ && npm run build
       shell: bash
