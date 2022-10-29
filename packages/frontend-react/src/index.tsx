@@ -10,6 +10,9 @@ import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import Orders from "./pages/orders";
 import Signup from "./pages/signup";
+import { demoApi } from "./api/demo-api";
+
+const api = demoApi;
 
 const router = createBrowserRouter([
   {
@@ -29,11 +32,15 @@ const router = createBrowserRouter([
   },
   {
     path: "login",
-    element: <Login setAuth={(...args: any[]) => console.log(args)} />,
+    element: (
+      <Login api={api} setAuth={(...args: any[]) => console.log(args)} />
+    ),
   },
   {
     path: "signup",
-    element: <Signup  setAuth={(...args: any[]) => console.log(args)}/>,
+    element: (
+      <Signup api={api} setAuth={(...args: any[]) => console.log(args)} />
+    ),
   },
 ]);
 

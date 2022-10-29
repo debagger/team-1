@@ -1,6 +1,3 @@
 export class ErrorEntity {
-    constructor(
-        public readonly code: number,
-        public readonly message: string
-    ) {}
+    constructor(public readonly message: string) {}
 }

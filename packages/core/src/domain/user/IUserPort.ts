@@ -1,13 +1,11 @@
-import { Either } from '@sweet-monads/either'
 import { ErrorEntity } from '../error/entities/ErrorEntity'
-import { IUser, UserId } from './IUser'
+import { IUser } from './IUser'
 
-export interface IUserLoadByIdCommand {
-    id: UserId
-}
+export type UpdateUserData = Omit<IUser, 'email'>
 
 export interface IUserPort {
-    loadById(id: IUserLoadByIdCommand): Promise<Either<ErrorEntity, IUser>>
-    create(user: Omit<IUser, 'id'>): Promise<Either<ErrorEntity, IUser>>
-    update()
+    getUserByEmail(email: string): Promise<IUser>
+    create(user: IUser): Promise<IUser>
+    update(email: string, data: UpdateUserData): Promise<IUser>
+    delete(email: string): Promise<void>
 }

@@ -16,6 +16,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import { IApi } from "core";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -28,7 +29,7 @@ const animate = {
   },
 };
 
-const LoginForm = ({ setAuth }: { setAuth: any }) => {
+const LoginForm = ({ setAuth, api }: { setAuth: any; api: IApi }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -49,13 +50,15 @@ const LoginForm = ({ setAuth }: { setAuth: any }) => {
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      console.log("submitting...");
-      setTimeout(() => {
-        console.log("submited!!");
+    onSubmit: async ({ email, password }) => {
+      debugger;
+      const loginResult = await api.auth.login(email, password);
+      if (loginResult.isRight()) {
         setAuth(true);
         navigate(from, { replace: true });
-      }, 2000);
+      } else {
+        console.log(loginResult.value.message);
+      }
     },
   });
 

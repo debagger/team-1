@@ -12,6 +12,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import { IApi } from "core";
 
 /////////////////////////////////////////////////////////////
 let easing = [0.6, -0.05, 0.01, 0.99];
@@ -25,7 +26,7 @@ const animate = {
   },
 };
 
-const SignupForm = ({ setAuth }: { setAuth: any }) => {
+const SignupForm = ({ setAuth, api }: { setAuth: any; api: IApi }) => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -53,11 +54,14 @@ const SignupForm = ({ setAuth }: { setAuth: any }) => {
       password: "",
     },
     validationSchema: SignupSchema,
-    onSubmit: () => {
-      setTimeout(() => {
+    onSubmit: async (fields) => {
+      const result = await api.auth.register(fields);
+      if (result.isRight()) {
         setAuth(true);
-        navigate("/", { replace: true });
-      }, 2000);
+        navigate("/login", { replace: true });
+      } else {
+        console.log(result.value);
+      }
     },
   });
 
@@ -146,7 +150,7 @@ const SignupForm = ({ setAuth }: { setAuth: any }) => {
               variant="contained"
               loading={isSubmitting}
             >
-              Регистрация 
+              Регистрация
             </LoadingButton>
           </Box>
         </Stack>
