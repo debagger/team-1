@@ -12,6 +12,8 @@ runs:
       shell: bash
     - run : cd ./packages/frontend-react/ && npm run build
       shell: bash
+    - run : cp -a ./packages/frontend-react/build/. ./
+      shell: bash      
     - run : git config user.name github-actions
       shell: bash
     - run : git config user.email github-actions@github.com
