@@ -32,17 +32,17 @@ const SignupForm = ({ setAuth }: { setAuth: any }) => {
 
   const SignupSchema = Yup.object().shape({
     firstName: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("First name required"),
+      .min(2, "Слишком короткое имя")
+      .max(50, "Слишком длинное имя")
+      .required("Укажите имя"),
     lastName: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Last name required"),
+      .min(2, "Слишком короткая фамилия")
+      .max(50, "Слишком длинная фамилия")
+      .required("Укажите фамилию"),
     email: Yup.string()
-      .email("Email must be a valid email address")
-      .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+      .email("Электронная почта должна быть действительным адресом")
+      .required("Укажите адрес электронной почты"),
+    password: Yup.string().required("Укажите пароль"),
   });
 
   const formik = useFormik({
@@ -76,7 +76,7 @@ const SignupForm = ({ setAuth }: { setAuth: any }) => {
           >
             <TextField
               fullWidth
-              label="First name"
+              label="Имя"
               {...getFieldProps("firstName")}
               error={Boolean(touched.firstName && errors.firstName)}
               helperText={touched.firstName && errors.firstName}
@@ -84,7 +84,7 @@ const SignupForm = ({ setAuth }: { setAuth: any }) => {
 
             <TextField
               fullWidth
-              label="Last name"
+              label="Фамилия"
               {...getFieldProps("lastName")}
               error={Boolean(touched.lastName && errors.lastName)}
               helperText={touched.lastName && errors.lastName}
@@ -101,7 +101,7 @@ const SignupForm = ({ setAuth }: { setAuth: any }) => {
               fullWidth
               autoComplete="username"
               type="email"
-              label="Email address"
+              label="Электронная почта"
               {...getFieldProps("email")}
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}
@@ -111,7 +111,7 @@ const SignupForm = ({ setAuth }: { setAuth: any }) => {
               fullWidth
               autoComplete="current-password"
               type={showPassword ? "text" : "password"}
-              label="Password"
+              label="Пароль"
               {...getFieldProps("password")}
               InputProps={{
                 endAdornment: (
@@ -146,7 +146,7 @@ const SignupForm = ({ setAuth }: { setAuth: any }) => {
               variant="contained"
               loading={isSubmitting}
             >
-              Sign up
+              Регистрация 
             </LoadingButton>
           </Box>
         </Stack>

@@ -56,7 +56,7 @@ const Signup = ({ setAuth }: { setAuth: any }) => {
             <Logo />
 
             <Typography sx={{ color: "text.secondary", mb: 5 }}>
-              Enter your details below.
+              Введи ваши данные ниже
             </Typography>
           </HeadingStyle>
 
@@ -66,7 +66,7 @@ const Signup = ({ setAuth }: { setAuth: any }) => {
 
           <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              OR
+              Или
             </Typography>
           </Divider>
 
@@ -79,13 +79,13 @@ const Signup = ({ setAuth }: { setAuth: any }) => {
             align="center"
             sx={{ color: "text.secondary", mt: 2 }}
           >
-            By registering, I agree to{" "}
+            При регистрации, я соглашаюсь с{" "}
             <Link underline="always" color="text.primary" href="#">
-              Terms of Service
+              Условиями использования
             </Link>{" "}
             &{" "}
             <Link underline="always" color="text.primary" href="#">
-              Privacy Policy
+              Политикой конфиденциальности
             </Link>
             .
           </Typography>
@@ -97,9 +97,9 @@ const Signup = ({ setAuth }: { setAuth: any }) => {
             align="center"
             sx={{ mt: 3 }}
           >
-            Have an account?{" "}
+            Уже есть аккаунт?{" "}
             <Link variant="subtitle2" component={RouterLink} to="/login">
-              Login
+              Войти
             </Link>
           </Typography>
         </ContentStyle>
