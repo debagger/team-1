@@ -22,3 +22,4 @@ npm start
 | Dmitry Gruzintsev | Full Stack Developer             |
 | Vitaly Pikalov    | Full Stack Developer             |
 | Alexander Komkov  | Full Stack Developer             |
+| Daniil Lukin      | Full Stack Developer             |
