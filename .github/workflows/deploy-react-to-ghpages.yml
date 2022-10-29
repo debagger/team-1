@@ -15,4 +15,4 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Deploy react app to github pages
-      uses: ./.github/actions/deploy-to-pages-action.yml
+      uses: ./.github/actions/deploy-to-pages-action
