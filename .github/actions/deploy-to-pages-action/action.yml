@@ -8,13 +8,11 @@ branding:
 runs: 
   using: 'composite'
   steps: 
-    - run : cd ./packages/frontend-react/
+    - run : cd ./packages/frontend-react/ && npm i
       shell: bash
-    - run : npm i
+    - run : cd ./packages/frontend-react/ && npm ci
       shell: bash
-    - run : npm ci
-      shell: bash
-    - run : npm run build
+    - run : cd ./packages/frontend-react/ && npm run build
       shell: bash
     - run : git config user.name github-actions
       shell: bash
