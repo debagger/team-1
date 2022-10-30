@@ -20,6 +20,6 @@ npm start
 | ----------------- | -------------------------------- |
 | Mikhail Sokolov   | Full Stack Developer / Team Lead |
 | Dmitry Gruzintsev | Full Stack Developer             |
-| Vitaly Pikalov    | Full Stack Developer             |
+| Vitaly Pikalov Vl | Full Stack Developer             |
 | Alexander Komkov  | Full Stack Developer             |
 | Daniil Lukin      | Full Stack Developer             |
