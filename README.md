@@ -9,8 +9,7 @@
 ```bash
 git clone https://github.com/debagger/team-1.git
 cd ./team-1
-npx lerna bootstrap
-cd ./packages/frontend-react/
+npm run bootstrap
 npm start
 ```
 
