@@ -6,5 +6,13 @@
   ],
   "devDependencies": {
     "lerna": "^5.5.4"
+  },
+  "dependencies": {
+    "md5": "^2.3.0"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "start": "lerna run --parallel start"
   }
 }

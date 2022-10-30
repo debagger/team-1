@@ -7,6 +7,7 @@ import SocialAuth from "../components/social-auth";
 import SignupForm from "../components/signup-form";
 import Logo from "../components/logo";
 import { motion } from "framer-motion";
+import { IApi } from "core";
 
 //////////////////////////////////
 const RootStyle = styled("div")({
@@ -47,7 +48,7 @@ const fadeInUp = {
   },
 };
 
-const Signup = ({ setAuth }: { setAuth: any }) => {
+const Signup = ({ setAuth, api }: { setAuth: any; api: IApi }) => {
   return (
     <RootStyle>
       <Container maxWidth="sm">
@@ -70,7 +71,7 @@ const Signup = ({ setAuth }: { setAuth: any }) => {
             </Typography>
           </Divider>
 
-          <SignupForm setAuth={setAuth} />
+          <SignupForm api={api} setAuth={setAuth} />
 
           <Typography
             component={motion.p}

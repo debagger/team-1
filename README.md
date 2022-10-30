@@ -9,8 +9,7 @@
 ```bash
 git clone https://github.com/debagger/team-1.git
 cd ./team-1
-npx lerna bootstrap
-cd ./packages/frontend-react/
+npm run bootstrap
 npm start
 ```
 
@@ -20,6 +19,6 @@ npm start
 | ----------------- | -------------------------------- |
 | Mikhail Sokolov   | Full Stack Developer / Team Lead |
 | Dmitry Gruzintsev | Full Stack Developer             |
-| Vitaly Pikalov    | Full Stack Developer             |
+| VVP               | Full Stack Developer             |
 | Alexander Komkov  | Full Stack Developer             |
 | Daniil Lukin      | Full Stack Developer             |
