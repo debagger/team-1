@@ -15,6 +15,7 @@ describe('UserService', () => {
             email: 'testmail',
             firstName: 'fn',
             lastName: 'ln',
+            avatar: '/logo192.png'
         }
 
         await userService.createUser(user)
