@@ -1,43 +1,51 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import reportWebVitals from "./reportWebVitals";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from "./root";
-import ErrorPage from "./pages/error-page";
-import Login from "./pages/login";
-import Dashboard from "./pages/dashboard";
-import Orders from "./pages/orders";
-import Signup from "./pages/signup";
-import { demoApi } from "./api/demo-api";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Root from './root';
+import ErrorPage from './pages/error-page';
+import Login from './pages/login';
+import Profile from './pages/profile';
+import Dashboard from './pages/dashboard';
+import Orders from './pages/orders';
+import Signup from './pages/signup';
+import { demoApi } from './api/demo-api';
 
 const api = demoApi;
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "dashboard",
+        path: 'dashboard',
         element: <Dashboard />,
       },
       {
-        path: "orders",
+        path: 'orders',
         element: <Orders />,
+      },
+      {
+        path: 'profile',
+        element: (
+          <Profile api={api} setAuth={(...args: any[]) => console.log(args)} />
+        ),
+        // Как убрать в настройках переделывание кавычек "" в одинарные '' ???
       },
     ],
   },
   {
-    path: "login",
+    path: 'login',
     element: (
       <Login api={api} setAuth={(...args: any[]) => console.log(args)} />
     ),
   },
   {
-    path: "signup",
+    path: 'signup',
     element: (
       <Signup api={api} setAuth={(...args: any[]) => console.log(args)} />
     ),
@@ -45,7 +53,7 @@ const router = createBrowserRouter([
 ]);
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
 
 root.render(
