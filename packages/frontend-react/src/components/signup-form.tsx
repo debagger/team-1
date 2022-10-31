@@ -12,7 +12,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import { IApi } from "core";
+import { ICoreClientApi } from "core";
 
 /////////////////////////////////////////////////////////////
 let easing = [0.6, -0.05, 0.01, 0.99];
@@ -26,7 +26,13 @@ const animate = {
   },
 };
 
-const SignupForm = ({ setAuth, api }: { setAuth: any; api: IApi }) => {
+const SignupForm = ({
+  setAuth,
+  api,
+}: {
+  setAuth: any;
+  api: ICoreClientApi;
+}) => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);

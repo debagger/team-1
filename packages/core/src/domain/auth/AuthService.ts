@@ -29,7 +29,8 @@ export class AuthService {
         password: string
     ): Promise<Either<ErrorEntity, ILoginOutput>> {
         const inputHash = md5(password)
-        const userHash = this.authPort.getUserPasswordHash(email)
+        const userHash = (await this.authPort.getUserPasswordHash(email)).value
+        console.log({ inputHash, userHash })
         if (inputHash !== userHash)
             return left(
                 new ErrorEntity(

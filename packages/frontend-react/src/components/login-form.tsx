@@ -16,7 +16,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import { IApi } from "core";
+import { ICoreClientApi } from "core";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -29,11 +29,10 @@ const animate = {
   },
 };
 
-const LoginForm = ({ setAuth, api }: { setAuth: any; api: IApi }) => {
+const LoginForm = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -50,10 +49,10 @@ const LoginForm = ({ setAuth, api }: { setAuth: any; api: IApi }) => {
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: async ({ email, password }) => {
-      debugger;
-      const loginResult = await api.auth.login(email, password);
+    onSubmit: async (fields) => {
+      const loginResult = await api.auth.login(fields);
       if (loginResult.isRight()) {
+        loginResult.mapRight((r) => localStorage.setItem("token", r.token)); //TODO:овнокод сделать красиво
         setAuth(true);
         navigate(from, { replace: true });
       } else {
