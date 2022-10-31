@@ -1,21 +1,34 @@
 import { AuthController } from './domain/auth/AuthController'
 import { AuthService } from './domain/auth/AuthService'
-import { IUserApi } from './domain/user/IUserApi'
 import { UserController } from './domain/user/UserController'
 import { UserService } from './domain/user/UserService'
-import { IApi } from './IApi'
+import { ClientApiType, ControllerType } from './IController'
 import { IPorts } from './IPorts'
 
-export function getCoreApi(ports: IPorts): IApi {
+export function getCoreApi(ports: IPorts) {
     const userService = new UserService(ports.users)
-    const users: IUserApi = new UserController(userService)
     const authService = new AuthService(ports.auth, userService)
+
+    const users = new UserController(userService)
     const auth = new AuthController(authService)
-    const api: IApi = { users, auth }
-    return api
+
+    return { users, auth }
 }
 
-export { IApi } from './IApi'
-export { IPorts } from './IPorts'
-export * from './domain'
+type CoreApiType = ReturnType<typeof getCoreApi>
+
+export type ICoreApi = {
+    [K in keyof CoreApiType]: ControllerType<CoreApiType[K]>
+}
+
+export type ICoreClientApi = {
+    [K in keyof ICoreApi]: ClientApiType<ICoreApi[K]>
+}
+
+export { IControllerMethodInput } from './IController'
+
 export { Either, left, right } from '@sweet-monads/either'
+
+export * from './domain'
+
+export { IPorts } from './IPorts'

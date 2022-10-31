@@ -6,7 +6,7 @@ import LoginForm from "../components/login-form";
 import SocialAuth from "../components/social-auth";
 import Logo from "../components/logo";
 import { motion } from "framer-motion";
-import { IApi } from "core";
+import { ICoreClientApi } from "core";
 
 //////////////////////////////////
 const RootStyle = styled("div")({
@@ -47,7 +47,7 @@ const fadeInUp = {
   },
 };
 
-const Login = ({ setAuth, api }: { setAuth: any; api: IApi }) => {
+const Login = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
   return (
     <RootStyle>
       <Container maxWidth="sm">

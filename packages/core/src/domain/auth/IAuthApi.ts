@@ -1,6 +1,6 @@
-import { Either } from '@sweet-monads/either'
-import { ErrorEntity } from '../error/entities/ErrorEntity'
+import { ClientApiType, ControllerType } from '../../IController'
 import { IUser } from '../user/IUser'
+import { AuthController } from './AuthController'
 
 export interface IRegisterUserInput extends IUser {
     password: string
@@ -10,10 +10,4 @@ export interface ILoginOutput {
     token: string
 }
 
-export interface IAuthApi {
-    register(input: IRegisterUserInput): Promise<Either<ErrorEntity, IUser>>
-    login(
-        email: string,
-        password: string
-    ): Promise<Either<ErrorEntity, ILoginOutput>>
-}
+export type IAuthApi = ClientApiType<ControllerType<AuthController>>

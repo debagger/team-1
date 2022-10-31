@@ -28,6 +28,7 @@ describe('AuthService', () => {
             email: 'testmail',
             firstName: 'fn',
             lastName: 'ln',
+            avatar: '/logo192.png'
         }
         const response = await authService.register(userData, 'password')
 

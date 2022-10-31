@@ -14,6 +14,8 @@ import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { ICoreClientApi } from "core";
 
+import { Link } from "react-router-dom";
+
 /////////////////////////////////////////////////////////////
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -26,7 +28,7 @@ const animate = {
   },
 };
 
-const SignupForm = ({
+const ProfileForm = ({
   setAuth,
   api,
 }: {
@@ -62,10 +64,11 @@ const SignupForm = ({
     },
     validationSchema: SignupSchema,
     onSubmit: async (fields) => {
-      const result = await api.auth.register(fields);
+      const { email, ...data } = fields;
+      const result = await api.users.updateUser({ email, data });
       if (result.isRight()) {
-        setAuth(true);
-        navigate("/login", { replace: true });
+        // setAuth(true);
+        navigate("/dashboard", { replace: true });
       } else {
         console.log(result.value);
       }
@@ -76,6 +79,16 @@ const SignupForm = ({
 
   return (
     <FormikProvider value={formik}>
+      <Box>
+        {/* <Link to="/"> */}
+        {/* <Box component="img" src="/logo192.png" alt="logo" /> */}
+        <Box
+          component="img"
+          src="https://wikieducator.org/images/1/16/Dummy_user.png"
+          alt="logo"
+        />
+        {/* </Link> */}
+      </Box>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Stack
@@ -157,7 +170,7 @@ const SignupForm = ({
               variant="contained"
               loading={isSubmitting}
             >
-              Регистрация
+              Сохранить
             </LoadingButton>
           </Box>
         </Stack>
@@ -166,4 +179,4 @@ const SignupForm = ({
   );
 };
 
-export default SignupForm;
+export default ProfileForm;
