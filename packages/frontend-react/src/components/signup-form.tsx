@@ -12,7 +12,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import { ICoreClientApi } from "core";
+import { IApi } from "core";
 
 /////////////////////////////////////////////////////////////
 let easing = [0.6, -0.05, 0.01, 0.99];
@@ -58,6 +58,7 @@ const SignupForm = ({
       lastName: "",
       email: "",
       password: "",
+      avatar: "",
     },
     validationSchema: SignupSchema,
     onSubmit: async (fields) => {
