@@ -52,7 +52,11 @@ const LoginForm = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
     onSubmit: async (fields) => {
       const loginResult = await api.auth.login(fields);
       if (loginResult.isRight()) {
-        loginResult.mapRight((r) => localStorage.setItem("token", r.token)); //TODO:овнокод сделать красиво
+        loginResult.mapRight((r) => {
+          localStorage.setItem("token", r.token);
+          localStorage.setItem("email", fields.email);
+        }); //TODO:овнокод сделать красиво
+
         setAuth(true);
         navigate(from, { replace: true });
       } else {
