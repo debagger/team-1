@@ -17,7 +17,10 @@ export class UserService {
         return right(result)
     }
 
-    async updateUser(email: string, newData: UpdateUserData): Promise<Either<ErrorEntity, IUser>> {
+    async updateUser(
+        email: string,
+        newData: UpdateUserData
+    ): Promise<Either<ErrorEntity, IUser>> {
         const user = await this.getUserByEmail(email)
         if (!user) return left(new ErrorEntity('Пользователь не существует'))
         const result = await this.port.update(email, newData)

@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import { useNavigate } from "react-router-dom";
 import {
@@ -35,11 +35,13 @@ const ProfileForm = ({
   setAuth: any;
   api: ICoreClientApi;
 }) => {
+  const [initialValues, setinitialValues] = useState();
+
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const SignupSchema = Yup.object().shape({
+  const ProfileSchema = Yup.object().shape({
     firstName: Yup.string()
       .min(2, "Слишком короткое имя")
       .max(50, "Слишком длинное имя")
@@ -62,7 +64,7 @@ const ProfileForm = ({
       password: "",
       avatar: "",
     },
-    validationSchema: SignupSchema,
+    validationSchema: ProfileSchema,
     onSubmit: async (fields) => {
       const { email, ...data } = fields;
       const result = await api.users.updateUser({ email, data });
@@ -74,6 +76,16 @@ const ProfileForm = ({
       }
     },
   });
+
+  useEffect(() => {
+    api.users.getCurrent().then((data) => {
+      // debugger;
+      data.mapRight((user) => {
+        const u = { ...user, password: "" };
+        formik.setValues(u);
+      });
+    });
+  }, []);
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 

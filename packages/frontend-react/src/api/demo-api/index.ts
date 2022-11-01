@@ -17,9 +17,9 @@ export const demoApi = new Proxy({} as ICoreClientApi, {
               const controller = (coreApi as any)[controllerName];
               if (methodName in controller) {
                 const token = localStorage.getItem("token");
-
+                const email = localStorage.getItem("email");
                 const input: IControllerMethodInput<any> = {
-                  context: { token },
+                  context: { token, email },
                   data,
                 };
 
