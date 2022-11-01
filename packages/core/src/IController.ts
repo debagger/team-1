@@ -3,30 +3,33 @@ import { ErrorEntity } from './domain'
 
 export interface IControllerContext {
     token: string | null
+    email: string | null
 }
 
-export type IControllerMethodInput<D> = {
+export interface IControllerMethodInput<D> {
     context: IControllerContext
     data: D
 }
 
-export type IControllerMethodOutput<O> = Promise<Either<ErrorEntity, O>>
+export type ControllerMethodOutput<O> = Promise<Either<ErrorEntity, O>>
 
 export type ControllerMetodType<D, O> = (
     input: IControllerMethodInput<D>
-) => IControllerMethodOutput<O>
+) => ControllerMethodOutput<O>
 
 export type ControllerType<ClassType> = {
     [K in keyof ClassType]: ClassType[K] extends ControllerMetodType<
         infer D,
         infer R
     >
-        ? ControllerMetodType<D, R>
-        : never
+        ? ControllerMetodType<D, R> extends ClassType[K]
+            ? ControllerMetodType<D, R>
+            : 'Неправильный тип метода контроллера'
+        : 'Неправильный тип метода контроллера'
 }
 
 export type ApiMethod<M> = M extends ControllerMetodType<infer D, infer O>
-    ? (data: D) => IControllerMethodOutput<O>
+    ? (data: D) => ControllerMethodOutput<O>
     : never
 
 export type ClientApiType<ApiClass> = ApiClass extends ControllerType<
