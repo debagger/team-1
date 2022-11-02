@@ -79,7 +79,6 @@ const ProfileForm = ({
 
   useEffect(() => {
     api.users.getCurrent().then((data) => {
-      // debugger;
       data.mapRight((user) => {
         const u = { ...user, password: "" };
         formik.setValues(u);

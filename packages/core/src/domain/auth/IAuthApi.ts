@@ -1,6 +1,6 @@
 import { ClientApiType, ControllerType } from '../../IController'
 import { IUser } from '../user/IUser'
-import { AuthController } from './AuthController'
+import { AuthController } from './auth.controller'
 
 export interface IRegisterUserInput extends IUser {
     password: string

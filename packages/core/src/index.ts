@@ -1,7 +1,7 @@
-import { AuthController } from './domain/auth/AuthController'
-import { AuthService } from './domain/auth/AuthService'
-import { UserController } from './domain/user/UserController'
-import { UserService } from './domain/user/UserService'
+import { AuthController } from './domain/auth/auth.controller'
+import { AuthService } from './domain/auth/auth.service'
+import { UserController } from './domain/user/user.controller'
+import { UserService } from './domain/user/user.service'
 import { ClientApiType, ControllerType } from './IController'
 import { IPorts } from './IPorts'
 

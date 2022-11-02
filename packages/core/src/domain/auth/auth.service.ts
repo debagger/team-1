@@ -1,7 +1,7 @@
 import { Either, left, right } from '@sweet-monads/either'
 import { ErrorEntity } from '../error/entities/ErrorEntity'
 import { IUser } from '../user/IUser'
-import { UserService } from '../user/UserService'
+import { UserService } from '../user/user.service'
 import { IAuthPort } from './IAuthPort'
 import md5 from 'md5'
 import { ILoginOutput } from './IAuthApi'

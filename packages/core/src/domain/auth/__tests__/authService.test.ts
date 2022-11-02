@@ -1,8 +1,8 @@
 import { right } from '@sweet-monads/either'
 import { IUser } from '../../user/IUser'
-import { UserService } from '../../user/UserService'
+import { UserService } from '../../user/user.service'
 import { makeUserServiceMock } from '../../user/__tests__/UserService.test'
-import { AuthService } from '../AuthService'
+import { AuthService } from '../auth.service'
 import md5 from 'md5'
 
 describe('AuthService', () => {
@@ -28,7 +28,7 @@ describe('AuthService', () => {
             email: 'testmail',
             firstName: 'fn',
             lastName: 'ln',
-            avatar: '/logo192.png'
+            avatar: '/logo192.png',
         }
         const response = await authService.register(userData, 'password')
 
