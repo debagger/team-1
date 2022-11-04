@@ -1,12 +1,12 @@
 import { left } from '@sweet-monads/either'
 import { BaseSchema, ValidationError } from 'yup'
-import { ErrorEntity } from './domain'
-import { ValidationErrorEntity } from './domain/error/entities/ValidationErrorEntity'
+import { ErrorEntity } from '../domain'
+import { ValidationErrorEntity } from '../errors/entities/validation-error.entity'
 import {
     ControllerMetodType,
     ControllerType,
     IControllerMethodInput,
-} from './IController'
+} from './controller.types'
 
 export const ValidateControllerInput = (schema: BaseSchema) => {
     return <T extends ControllerType<T>, PKey extends keyof T>(

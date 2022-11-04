@@ -1,4 +1,4 @@
-import { ClientApiType, ControllerType } from '../../IController'
+import { ClientApiType, ControllerType } from '../../common/controller.types'
 import { IUser } from '../user/IUser'
 import { AuthController } from './auth.controller'
 

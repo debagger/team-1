@@ -5,9 +5,9 @@ import {
     ControllerType,
     IControllerMethodInput,
     ControllerMethodOutput,
-} from '../../IController'
+} from '../../common/controller.types'
 import { right } from '@sweet-monads/either'
-import { ValidateControllerInput } from '../../validate.decorator'
+import { ValidateControllerInput } from '../../common/validate.decorator'
 import { InferType, object, string } from 'yup'
 import { UpdateUserDto } from './dto/update-user.dto'
 

@@ -1,7 +1,7 @@
 import { Either, left, right } from '@sweet-monads/either'
 import { object } from 'yup'
-import { ValidateControllerInput } from '../../validate.decorator'
-import { ErrorEntity } from '../error/entities/ErrorEntity'
+import { ValidateControllerInput } from '../../common/validate.decorator'
+import { ErrorEntity } from '../../errors/entities/error.entity'
 import { IUser } from './IUser'
 import { IUserPort, UpdateUserData } from './IUserPort'
 

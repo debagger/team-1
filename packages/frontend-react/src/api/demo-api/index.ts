@@ -1,37 +1,22 @@
-import { getCoreApi, ICoreClientApi, IControllerMethodInput } from "core";
-import { DemoPort } from "./demo-port";
+import { getCoreApiRequest, ICoreClientApi } from "core";
+import { DemoPort } from "./demo.port";
 
-const coreApi = getCoreApi(new DemoPort());
+const coreApiRequest = getCoreApiRequest(new DemoPort());
 
 export const demoApi = new Proxy({} as ICoreClientApi, {
   get(_, controllerName) {
-    if (typeof controllerName === "symbol") return;
-
+    if (typeof controllerName !== "string") return;
     return new Proxy(
       {},
       {
         get(_, methodName) {
-          if (typeof methodName === "symbol") return;
+          if (typeof methodName !== "string") return;
           return (data: any) => {
-            if (controllerName in (coreApi as any)) {
-              const controller = (coreApi as any)[controllerName];
-              if (methodName in controller) {
-                const token = localStorage.getItem("token");
-                const email = localStorage.getItem("email");
-                const input: IControllerMethodInput<any> = {
-                  context: { token, email },
-                  data,
-                };
-
-                return controller[methodName](input);
-              }
-              throw new Error(
-                `У контроллера ${controllerName} не найден метод ${methodName}`
-              );
-            }
-            throw new Error(
-              `Контроллер с именем ${controllerName as string} не найден`
-            );
+            const token = localStorage.getItem("token");
+            return coreApiRequest(controllerName as any, methodName as any, {
+              context: { token },
+              data,
+            });
           };
         },
       }

@@ -4,9 +4,9 @@ import {
     ControllerMethodOutput,
     ControllerType,
     IControllerMethodInput,
-} from '../../IController'
-import { ValidateControllerInput } from '../../validate.decorator'
-import { ErrorEntity } from '../error/entities/ErrorEntity'
+} from '../../common/controller.types'
+import { ValidateControllerInput } from '../../common/validate.decorator'
+import { ErrorEntity } from '../../errors/entities/error.entity'
 import { IUser } from '../user/IUser'
 import { AuthService } from './auth.service'
 import { loginDto } from './dto/login.dto'
