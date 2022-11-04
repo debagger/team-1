@@ -3,7 +3,7 @@ import { UserService } from './user.service'
 import { UpdateUserData } from './IUserPort'
 import {
     ControllerType,
-    IControllerMethodInput,
+    Input,
     ControllerMethodOutput,
 } from '../../common/controller.types'
 import { right } from '@sweet-monads/either'
@@ -15,14 +15,12 @@ export class UserController implements ControllerType<UserController> {
     constructor(private readonly userService: UserService) {}
     @ValidateControllerInput(object({ email: string().defined().email() }))
     async getUser(
-        input: IControllerMethodInput<{ email: string }>
+        input: Input<{ email: string }>
     ): ControllerMethodOutput<IUser> {
         return right(await this.userService.getUserByEmail(input.data.email))
     }
 
-    async getCurrent({
-        context,
-    }: IControllerMethodInput<void>): ControllerMethodOutput<IUser> {
+    async getCurrent({ context }: Input<void>): ControllerMethodOutput<IUser> {
         const user = await this.userService.getUserByEmail(context.email)
         return right(user)
     }
@@ -30,9 +28,7 @@ export class UserController implements ControllerType<UserController> {
     @ValidateControllerInput(UpdateUserDto)
     async updateUser({
         data,
-    }: IControllerMethodInput<
-        InferType<typeof UpdateUserDto>
-    >): ControllerMethodOutput<IUser> {
+    }: Input<InferType<typeof UpdateUserDto>>): ControllerMethodOutput<IUser> {
         const { data: newData, email } = data
         const user = await this.userService.updateUser(email, newData)
         return user

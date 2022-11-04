@@ -6,7 +6,7 @@ export interface IControllerContext {
     isAuthenticated: boolean
 }
 
-export interface IControllerMethodInput<D> {
+export interface Input<D> {
     context: IControllerContext
     data: D
 }
@@ -14,7 +14,7 @@ export interface IControllerMethodInput<D> {
 export type ControllerMethodOutput<O> = Promise<Either<ErrorEntity, O>>
 
 export type ControllerMetodType<D, O> = (
-    input: IControllerMethodInput<D>
+    input: Input<D>
 ) => ControllerMethodOutput<O>
 
 export type ControllerType<ClassType> = {

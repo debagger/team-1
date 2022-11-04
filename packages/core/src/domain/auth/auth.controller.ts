@@ -3,7 +3,7 @@ import { InferType, object, string } from 'yup'
 import {
     ControllerMethodOutput,
     ControllerType,
-    IControllerMethodInput,
+    Input,
 } from '../../common/controller.types'
 import { ValidateControllerInput } from '../../common/validate.decorator'
 import { ErrorEntity } from '../../errors/entities/error.entity'
@@ -19,9 +19,7 @@ export class AuthController implements ControllerType<AuthController> {
     @ValidateControllerInput(registerDto)
     async register({
         data,
-    }: IControllerMethodInput<
-        InferType<typeof registerDto>
-    >): ControllerMethodOutput<IUser> {
+    }: Input<InferType<typeof registerDto>>): ControllerMethodOutput<IUser> {
         const { password, ...userData } = data
         return await this.authService.register(
             { ...userData, avatar: null },
@@ -32,7 +30,7 @@ export class AuthController implements ControllerType<AuthController> {
     @ValidateControllerInput(loginDto)
     async login({
         data,
-    }: IControllerMethodInput<
+    }: Input<
         InferType<typeof loginDto>
     >): ControllerMethodOutput<ILoginOutput> {
         const { email, password } = data

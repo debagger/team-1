@@ -1,14 +1,10 @@
 import { left } from '@sweet-monads/either'
-import { BaseSchema, ValidationError } from 'yup'
+import { BaseSchema, InferType, ValidationError } from 'yup'
 import { ErrorEntity } from '../domain'
 import { ValidationErrorEntity } from '../errors/entities/validation-error.entity'
-import {
-    ControllerMetodType,
-    ControllerType,
-    IControllerMethodInput,
-} from './controller.types'
+import { ControllerMetodType, ControllerType, Input } from './controller.types'
 
-export const ValidateControllerInput = (schema: BaseSchema) => {
+export const ValidateControllerInput = <DT extends BaseSchema>(schema: DT) => {
     return <T extends ControllerType<T>, PKey extends keyof T>(
         target: T,
         propertyKey: PKey,
@@ -17,7 +13,7 @@ export const ValidateControllerInput = (schema: BaseSchema) => {
         >
     ) => {
         const original = descriptor.value
-        descriptor.value = function (input) {
+        descriptor.value = function (input: Input<InferType<DT>>) {
             if (input?.data) {
                 try {
                     const data = schema.validateSync(input.data, {
