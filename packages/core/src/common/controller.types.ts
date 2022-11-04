@@ -1,9 +1,9 @@
 import { Either } from '@sweet-monads/either'
-import { ErrorEntity } from './domain'
+import { ErrorEntity } from '../domain'
 
 export interface IControllerContext {
-    token: string | null
     email: string | null
+    isAuthenticated: boolean
 }
 
 export interface IControllerMethodInput<D> {

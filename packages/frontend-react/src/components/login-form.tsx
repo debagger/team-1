@@ -60,7 +60,7 @@ const LoginForm = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
         setAuth(true);
         navigate(from, { replace: true });
       } else {
-        console.log(loginResult.value.message);
+        console.log(loginResult.value);
       }
     },
   });
