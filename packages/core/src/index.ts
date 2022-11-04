@@ -6,18 +6,14 @@ import {
     ClientApiType,
     ControllerType,
     ControllerMetodType,
-    IControllerMethodInput,
+    Input,
     ControllerMethodOutput,
     IControllerContext,
 } from './common/controller.types'
 import { IPorts } from './ports.interface'
 import { Either, left } from '@sweet-monads/either'
 import { NotFoundErrorEntity } from './errors/entities/not-found-error.entity'
-
-export interface InternalApi {
-    users: UserController
-    auth: AuthController
-}
+import { InternalApi } from './internal-api.interface'
 
 export type ApiModuleName = Extract<keyof InternalApi, string>
 
@@ -84,7 +80,7 @@ export function getCoreApiRequest(ports: IPorts): ApiRequest {
             context.isAuthenticated = true
         }
 
-        const methodInput: IControllerMethodInput<unknown> = {
+        const methodInput: Input<unknown> = {
             context,
             data: input.data,
         }
@@ -120,7 +116,7 @@ export type ICoreClientApi = {
     [K in keyof ICoreApi]: ClientApiType<ICoreApi[K]>
 }
 
-export { IControllerMethodInput } from './common/controller.types'
+export { Input as IControllerMethodInput } from './common/controller.types'
 
 export { Either, left, right } from '@sweet-monads/either'
 
