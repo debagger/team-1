@@ -82,13 +82,15 @@ const Profile = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
         updateBudgets()
     }, [])
 
-    const handleAddBudget = () => {
-        api.budget.createBudget({ name: 'test' }).then(updateBudgets)
+    const handleAddBudget = (data: { name: string }) => {
+        api.budget.createBudget(data).then(updateBudgets)
     }
 
     const handleDeleteBudget = (id: number) => () => {
         api.budget.deleteBudget({ budget_id: id }).then(updateBudgets)
     }
+
+    const [addFormData, setAddFormData] = React.useState({ name: '' })
 
     const [editFormData, setEditFormData] = React.useState({ name: '' })
 
@@ -112,9 +114,19 @@ const Profile = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
                                 <ProfileForm api={api} setAuth={setAuth} />
                             </TabPanel>
                             <TabPanel value={tabIndex} index={1}>
-                                <IconButton onClick={handleAddBudget}>
-                                    <Add />
-                                </IconButton>
+                                <DialogForm
+                                    buttonIcon={<Add />}
+                                    title="Добавить"
+                                    onOpen={() => setAddFormData({ name: '' })}
+                                    onOk={() => handleAddBudget(addFormData)}
+                                >
+                                    <TextField
+                                        label="Название"
+                                        value={addFormData.name}
+                                        onChange={(e) => setAddFormData({ name: e.currentTarget.value })}
+                                    />
+                                </DialogForm>
+
                                 <List>
                                     {budgets.map((b) => (
                                         <ListItem key={b.id}>
