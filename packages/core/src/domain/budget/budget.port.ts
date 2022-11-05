@@ -1,33 +1,36 @@
 import { Either } from '@sweet-monads/either'
 import { ErrorEntity } from '../../errors'
 import { IUser } from '../user'
+import { BudgetUserEntity } from './budget-user.entity'
 import { BudgetEntity } from './budget.entity'
 
 export interface IBudgetPort {
-    createBudget(
-        owner_email: string,
-        name: string
-    ): Promise<Either<ErrorEntity, BudgetEntity>>
+    createBudget(name: string): Promise<Either<ErrorEntity, BudgetEntity>>
 
-    getOwnedBudgets(
-        owner_email: string
-    ): Promise<Either<ErrorEntity, BudgetEntity[]>>
-
-    getCollabBudgets(
-        collab_email: string
-    ): Promise<Either<ErrorEntity, BudgetEntity[]>>
-
-    addCollaborator(
-        budget_id: number,
-        collab_email: string
-    ): Promise<Either<ErrorEntity, void>>
-
-    removeCollaborator(
-        budget_id: number,
+    getUserBudgets(
         user_email: string
-    ): Promise<Either<ErrorEntity, void>>
-
-    getCollaborators(budget_id: number): Promise<Either<ErrorEntity, IUser[]>>
+    ): Promise<Either<ErrorEntity, BudgetEntity[]>>
 
     getBudgetById(budget_id: number): Promise<Either<ErrorEntity, BudgetEntity>>
+
+    updateBudget(
+        budget: BudgetEntity
+    ): Promise<Either<ErrorEntity, BudgetEntity>>
+
+    deleteBudget(budget_id: number): Promise<Either<ErrorEntity, void>>
+
+    createBudgetUser(
+        user: Omit<BudgetUserEntity, 'id'>
+    ): Promise<Either<ErrorEntity, BudgetUserEntity>>
+
+    updateBudgetUser(
+        id: number,
+        date: Omit<BudgetUserEntity, 'id'>
+    ): Promise<Either<ErrorEntity, BudgetUserEntity>>
+
+    deleteBudgetUser(id: number): Promise<Either<ErrorEntity, void>>
+
+    getBudgetUsers(
+        budget_id: number
+    ): Promise<Either<ErrorEntity, BudgetUserEntity[]>>
 }

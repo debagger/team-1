@@ -41,7 +41,7 @@
     "build": "tsc",
     "start": "tsc --watch",
     "test": "jest",
-    "test:watch": "jest:watch"
+    "test:watch": "jest --watch"
   },
   "bugs": {
     "url": "https://github.com/debagger/team-1/issues"

@@ -1,75 +1,149 @@
-import * as React from "react";
-import { Timeline } from "react-svg-timeline";
-import styled from "@emotion/styled";
-import { Container, Typography, Link, Box, Divider } from "@mui/material";
-import { motion } from "framer-motion";
-import Logo from "../components/logo";
-import ProfileForm from "../components/profile-form";
-import { ICoreClientApi } from "core";
+import * as React from 'react'
+import styled from '@emotion/styled'
+import {
+    Container,
+    Box,
+    Tab,
+    Tabs,
+    Typography,
+    Button,
+    List,
+    ListItem,
+    ListItemText,
+    IconButton,
+    TextField,
+} from '@mui/material'
+import { Delete, Add, Edit } from '@mui/icons-material'
+import ProfileForm from '../components/profile-form'
+import { ICoreClientApi } from 'core'
+import { isEither } from '@sweet-monads/either'
+import DialogForm from '../components/dialog-form'
 
 //////////////////////////////////
-const RootStyle = styled("div")({
-  background: "rgb(249, 250, 251)",
-  // height: '100vh',
-  display: "grid",
-  placeItems: "center",
-});
-
-const HeadingStyle = styled(Box)({
-  textAlign: "center",
-});
+const RootStyle = styled('div')({
+    background: 'rgb(249, 250, 251)',
+    // height: '100vh',
+    display: 'grid',
+    placeItems: 'center',
+})
 
 const ContentStyle = styled(Box)({
-  maxWidth: 480,
-  padding: 25,
-  margin: "auto",
-  display: "flex",
-  justifyContent: "center",
-  flexDirection: "column",
-  background: "#fff",
-});
+    maxWidth: 480,
+    padding: 25,
+    margin: 'auto',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    background: '#fff',
+})
 
-let easing = [0.6, -0.05, 0.01, 0.99];
-const fadeInUp = {
-  initial: {
-    y: 40,
-    opacity: 0,
-    transition: { duration: 0.6, ease: easing },
-  },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: easing,
-    },
-  },
-};
+interface TabPanelProps {
+    children?: React.ReactNode
+    index: number
+    value: number
+}
 
-// export default function Profile(){
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+        </div>
+    )
+}
+
+function a11yProps(index: number) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    }
+}
+
 const Profile = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
-  const ref = React.useRef<any>(null);
-  const [width, setWidth] = React.useState(0);
+    const ref = React.useRef<any>(null)
+    const [tabIndex, setTabIndex] = React.useState(0)
+    const handleTabChange = (event: React.SyntheticEvent, newTabIndex: number) => {
+        setTabIndex(newTabIndex)
+    }
 
-  return (
-    <div ref={ref}>
-      <RootStyle>
-        <Container maxWidth="sm">
-          <ContentStyle>
-            {/* <HeadingStyle component={motion.div} {...fadeInUp}>
-              <Logo />
+    const [budgets, setBudgets] = React.useState<any[]>([])
 
-              <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-                Введите ваши данные ниже
-              </Typography>
-            </HeadingStyle> */}
+    const updateBudgets = () =>
+        api.budget.getBudgets().then(async (b) => (b.isRight() ? setBudgets(b.value) : console.log(b.value)))
 
-            <ProfileForm api={api} setAuth={setAuth} />
-          </ContentStyle>
-        </Container>
-      </RootStyle>
-    </div>
-  );
-};
+    React.useEffect(() => {
+        updateBudgets()
+    }, [])
 
-export default Profile;
+    const handleAddBudget = () => {
+        api.budget.createBudget({ name: 'test' }).then(updateBudgets)
+    }
+
+    const handleDeleteBudget = (id: number) => () => {
+        api.budget.deleteBudget({ budget_id: id }).then(updateBudgets)
+    }
+
+    const [editFormData, setEditFormData] = React.useState({ name: '' })
+
+    const handleUpdateName = (id: number, newName: string) => {
+        api.budget.updateBudgetName({ budget_id: id, name: newName }).then(updateBudgets)
+    }
+
+    return (
+        <div ref={ref}>
+            <RootStyle>
+                <Container maxWidth="sm">
+                    <ContentStyle>
+                        <Box sx={{ width: '100%' }}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <Tabs value={tabIndex} onChange={handleTabChange} aria-label="basic tabs example">
+                                    <Tab label="Профиль" {...a11yProps(0)} />
+                                    <Tab label="Бюджеты" {...a11yProps(1)} />
+                                </Tabs>
+                            </Box>
+                            <TabPanel value={tabIndex} index={0}>
+                                <ProfileForm api={api} setAuth={setAuth} />
+                            </TabPanel>
+                            <TabPanel value={tabIndex} index={1}>
+                                <IconButton onClick={handleAddBudget}>
+                                    <Add />
+                                </IconButton>
+                                <List>
+                                    {budgets.map((b) => (
+                                        <ListItem key={b.id}>
+                                            <ListItemText primary={b.name} />
+                                            <DialogForm
+                                                buttonIcon={<Edit />}
+                                                title="Редактировать"
+                                                onOk={() => handleUpdateName(b.id, editFormData.name)}
+                                                onOpen={() => setEditFormData({ name: b.name })}
+                                            >
+                                                <TextField
+                                                    label="Название"
+                                                    value={editFormData.name}
+                                                    onChange={(e) => setEditFormData({ name: e.currentTarget.value })}
+                                                />
+                                            </DialogForm>
+                                            <IconButton onClick={handleDeleteBudget(b.id)}>
+                                                <Delete />
+                                            </IconButton>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </TabPanel>
+                        </Box>
+                    </ContentStyle>
+                </Container>
+            </RootStyle>
+        </div>
+    )
+}
+
+export default Profile

@@ -1,55 +1,77 @@
-import { left, right } from '@sweet-monads/either'
+import { chain, left, merge, mergeInMany, right } from '@sweet-monads/either'
 import { ErrorEntity } from '../../errors'
 import { NotFoundErrorEntity } from '../../errors/entities/not-found-error.entity'
+import { BudgetUserRoleEnum } from './budget-user.entity'
 import { IBudgetPort } from './budget.port'
 
 export class BudgetService {
     constructor(private readonly budgetPort: IBudgetPort) {}
 
     async createBudget(owner_email: string, name: string) {
-        return this.budgetPort.createBudget(owner_email, name)
-    }
-
-    async getOwnedBudgets(owner_email: string) {
-        return this.budgetPort.getOwnedBudgets(owner_email)
-    }
-
-    async getCollabBudgets(collab_email: string) {
-        return this.budgetPort.getCollabBudgets(collab_email)
-    }
-
-    async getCollaborators(user_email: string, budget_id: number) {
-        const isOwner = await this.checkOwner(user_email, budget_id)
-        return isOwner.asyncChain(async () =>
-            this.budgetPort.getCollaborators(budget_id)
+        return await this.budgetPort.createBudget(name).then(
+            chain(async (b) =>
+                this.budgetPort
+                    .createBudgetUser({
+                        budget_id: b.id,
+                        role: BudgetUserRoleEnum.OWNER,
+                        user_email: owner_email,
+                    })
+                    .then(chain(async (u) => right(b)))
+            )
         )
     }
 
-    private async checkOwner(user_email: string, budget_id: number) {
-        return (await this.budgetPort.getBudgetById(budget_id)).chain(
-            (budget) =>
-                user_email !== budget.owner_email
-                    ? left(
-                          new NotFoundErrorEntity(
-                              'Пользователь должен быть владельцем бюджета'
-                          )
-                      )
-                    : right(true)
+    async deleteBudget(user_email: string, budget_id: number) {
+        return await this.checkRole(
+            user_email,
+            budget_id,
+            BudgetUserRoleEnum.OWNER
+        ).then(
+            chain(async () => {
+                this.budgetPort
+                    .getBudgetUsers(budget_id)
+                    .then(
+                        chain(async (users) =>
+                            merge(
+                                await Promise.all(
+                                    users.map((user) =>
+                                        this.budgetPort.deleteBudgetUser(
+                                            user.id
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                return this.budgetPort.deleteBudget(budget_id)
+            })
         )
     }
-    async addCollabortor(
+
+    async checkRole(
         user_email: string,
         budget_id: number,
-        collab_email: string
+        role: BudgetUserRoleEnum
     ) {
-        return this.budgetPort.addCollaborator(budget_id, collab_email)
+        const users = await this.budgetPort.getBudgetUsers(budget_id)
+        return users.chain((users) =>
+            users.find(
+                (user) => user.user_email === user_email && user.role === role
+            )
+                ? right(true)
+                : left(new NotFoundErrorEntity(`Недостаточно прав`))
+        )
     }
 
-    async removeCollaborator(
-        user_email: string,
-        budget_id: number,
-        collab_email: string
-    ) {
-        return this.removeCollaborator(user_email, budget_id, collab_email)
+    async getBudgets(user_email: string) {
+        return this.budgetPort.getUserBudgets(user_email)
+    }
+
+    async updateBudgetName(email: string, budget_id: number, name: string) {
+        return this.checkRole(email, budget_id, BudgetUserRoleEnum.OWNER).then(
+            chain(async () =>
+                this.budgetPort.updateBudget({ id: budget_id, name })
+            )
+        )
     }
 }

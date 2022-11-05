@@ -14,6 +14,8 @@ import { IPorts } from './ports.interface'
 import { Either, left } from '@sweet-monads/either'
 import { NotFoundErrorEntity } from './errors/entities/not-found-error.entity'
 import { InternalApi } from './internal-api.interface'
+import { BudgetService } from './domain/budget/budget.service'
+import { BudgetController } from './domain/budget/budget.controller'
 
 export type ApiModuleName = Extract<keyof InternalApi, string>
 
@@ -57,10 +59,13 @@ export type ApiRequest = <
 export function getCoreApiRequest(ports: IPorts): ApiRequest {
     const userService = new UserService(ports.users)
     const authService = new AuthService(ports.auth, userService)
+    const budgetService = new BudgetService(ports.budget)
 
     const users = new UserController(userService)
     const auth = new AuthController(authService)
-    const api = { users, auth }
+    const budget = new BudgetController(budgetService)
+
+    const api: InternalApi = { users, auth, budget }
 
     const request: ApiRequest = (async (
         moduleName: string,
