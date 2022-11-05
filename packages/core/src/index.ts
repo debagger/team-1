@@ -78,13 +78,14 @@ export function getCoreApiRequest(ports: IPorts): ApiRequest {
             email: null,
             isAuthenticated: false,
         }
-        const email = await ports.auth.getUserEmailByToken(token)
+        if (token) {
+            const email = await ports.auth.getUserEmailByToken(token)
 
-        if (email.isRight()) {
-            context.email = email.value.email
-            context.isAuthenticated = true
+            if (email.isRight()) {
+                context.email = email.value.email
+                context.isAuthenticated = true
+            }
         }
-
         const methodInput: Input<unknown> = {
             context,
             data: input.data,

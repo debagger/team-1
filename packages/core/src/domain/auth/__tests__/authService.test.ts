@@ -40,6 +40,8 @@ describe('AuthService', () => {
         expect(key).toEqual(userData.email)
         expect(value).toEqual(md5('password'))
     })
+
+    test('empty token case', async () => {})
 })
 
 export function makeAuthServiceMock(userService: UserService) {
