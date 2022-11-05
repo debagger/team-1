@@ -1,23 +1,9 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
-import {
-    Container,
-    Box,
-    Tab,
-    Tabs,
-    Typography,
-    Button,
-    List,
-    ListItem,
-    ListItemText,
-    IconButton,
-    TextField,
-} from '@mui/material'
-import { Delete, Add, Edit } from '@mui/icons-material'
+import { Container, Box, Tab, Tabs } from '@mui/material'
 import ProfileForm from '../components/profile-form'
 import { ICoreClientApi } from 'core'
-import { isEither } from '@sweet-monads/either'
-import DialogForm from '../components/dialog-form'
+import BudgetsList from '../components/budgets-list'
 
 //////////////////////////////////
 const RootStyle = styled('div')({
@@ -73,31 +59,6 @@ const Profile = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
         setTabIndex(newTabIndex)
     }
 
-    const [budgets, setBudgets] = React.useState<any[]>([])
-
-    const updateBudgets = () =>
-        api.budget.getBudgets().then(async (b) => (b.isRight() ? setBudgets(b.value) : console.log(b.value)))
-
-    React.useEffect(() => {
-        updateBudgets()
-    }, [])
-
-    const handleAddBudget = (data: { name: string }) => {
-        api.budget.createBudget(data).then(updateBudgets)
-    }
-
-    const handleDeleteBudget = (id: number) => () => {
-        api.budget.deleteBudget({ budget_id: id }).then(updateBudgets)
-    }
-
-    const [addFormData, setAddFormData] = React.useState({ name: '' })
-
-    const [editFormData, setEditFormData] = React.useState({ name: '' })
-
-    const handleUpdateName = (id: number, newName: string) => {
-        api.budget.updateBudgetName({ budget_id: id, name: newName }).then(updateBudgets)
-    }
-
     return (
         <div ref={ref}>
             <RootStyle>
@@ -110,45 +71,13 @@ const Profile = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
                                     <Tab label="Бюджеты" {...a11yProps(1)} />
                                 </Tabs>
                             </Box>
+
                             <TabPanel value={tabIndex} index={0}>
                                 <ProfileForm api={api} setAuth={setAuth} />
                             </TabPanel>
-                            <TabPanel value={tabIndex} index={1}>
-                                <DialogForm
-                                    buttonIcon={<Add />}
-                                    title="Добавить"
-                                    onOpen={() => setAddFormData({ name: '' })}
-                                    onOk={() => handleAddBudget(addFormData)}
-                                >
-                                    <TextField
-                                        label="Название"
-                                        value={addFormData.name}
-                                        onChange={(e) => setAddFormData({ name: e.currentTarget.value })}
-                                    />
-                                </DialogForm>
 
-                                <List>
-                                    {budgets.map((b) => (
-                                        <ListItem key={b.id}>
-                                            <ListItemText primary={b.name} />
-                                            <DialogForm
-                                                buttonIcon={<Edit />}
-                                                title="Редактировать"
-                                                onOk={() => handleUpdateName(b.id, editFormData.name)}
-                                                onOpen={() => setEditFormData({ name: b.name })}
-                                            >
-                                                <TextField
-                                                    label="Название"
-                                                    value={editFormData.name}
-                                                    onChange={(e) => setEditFormData({ name: e.currentTarget.value })}
-                                                />
-                                            </DialogForm>
-                                            <IconButton onClick={handleDeleteBudget(b.id)}>
-                                                <Delete />
-                                            </IconButton>
-                                        </ListItem>
-                                    ))}
-                                </List>
+                            <TabPanel value={tabIndex} index={1}>
+                                <BudgetsList api={api} />
                             </TabPanel>
                         </Box>
                     </ContentStyle>
