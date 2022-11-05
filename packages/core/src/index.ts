@@ -16,6 +16,8 @@ import { NotFoundErrorEntity } from './errors/entities/not-found-error.entity'
 import { InternalApi } from './internal-api.interface'
 import { BudgetService } from './domain/budget/budget.service'
 import { BudgetController } from './domain/budget/budget.controller'
+import { TransactionsController } from './domain/transactions/transactions.controller'
+import { TransactionsService } from './domain/transactions/transactions.service'
 
 export type ApiModuleName = Extract<keyof InternalApi, string>
 
@@ -60,12 +62,14 @@ export function getCoreApiRequest(ports: IPorts): ApiRequest {
     const userService = new UserService(ports.users)
     const authService = new AuthService(ports.auth, userService)
     const budgetService = new BudgetService(ports.budget)
+    const transactionsService = new TransactionsService(ports.transaction)
 
     const users = new UserController(userService)
     const auth = new AuthController(authService)
     const budget = new BudgetController(budgetService)
+    const transactions = new TransactionsController(transactionsService)
 
-    const api: InternalApi = { users, auth, budget }
+    const api: InternalApi = { users, auth, budget, transactions }
 
     const request: ApiRequest = (async (
         moduleName: string,

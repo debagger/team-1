@@ -54,6 +54,12 @@ function a11yProps(index: number) {
 
 const Profile = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
     const ref = React.useRef<any>(null)
+
+    React.useEffect(() => {
+        api.transactions
+            .addTransaction({ amount: 1, budget_id: 1, name: 'test', date: new Date() })
+            .then((res) => console.log({ res }))
+    })
     const [tabIndex, setTabIndex] = React.useState(0)
     const handleTabChange = (event: React.SyntheticEvent, newTabIndex: number) => {
         setTabIndex(newTabIndex)
