@@ -84,4 +84,13 @@ export class BudgetPort implements IBudgetPort {
             this.withBudgetsUsers((items) => Object.values(items).filter((user) => user.budget_id === budget_id))
         )
     }
+    async getBudgetInfo(budget_id: number): Promise<Either<ErrorEntity, {info: BudgetEntity, users: BudgetUserEntity[]}>>{
+        return left(new ErrorEntity('Не знаю как реализовать логику ниже'))
+        // return right( 
+        //     {
+        //         info: (await (await this.getBudgetById(budget_id))),
+        //         users: undefined // (await this.getBudgetUsers(budget_id)).,
+        //     }
+        // )
+    }
 }

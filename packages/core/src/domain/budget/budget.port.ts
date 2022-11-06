@@ -33,4 +33,8 @@ export interface IBudgetPort {
     getBudgetUsers(
         budget_id: number
     ): Promise<Either<ErrorEntity, BudgetUserEntity[]>>
+
+    getBudgetInfo(
+        budget_id: number
+    ): Promise<Either<ErrorEntity, {info: BudgetEntity, users: BudgetUserEntity[]}>>
 }

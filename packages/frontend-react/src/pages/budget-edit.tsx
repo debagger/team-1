@@ -1,6 +1,10 @@
 import * as React from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { Container, Box, IconButton } from '@mui/material'
+import { Container, Box, IconButton, TextField, InputAdornment, Stack } from '@mui/material'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import PersonIcon from '@mui/icons-material/Person'
+import PermIdentityIcon from '@mui/icons-material/PermIdentity'
+
 import styled from '@emotion/styled'
 import { ArrowLeft } from '@mui/icons-material'
 import { ICoreClientApi } from 'core'
@@ -36,6 +40,8 @@ const BudgetEdit: React.FC<Props> = ({ api }) => {
         api.budget.updateBudgetName({ budget_id: id, name: newName })
     }
 
+    // const budgetUsers = api.budget.getBudgetInfo({params.id})
+
     return (
         <div>
             <RootStyle>
@@ -49,10 +55,86 @@ const BudgetEdit: React.FC<Props> = ({ api }) => {
                                             <ArrowLeft />
                                         </IconButton>
                                     </span>
-                                    Редактировать бюджет
+                                    Редактировать бюджет {params.id}
                                 </h3>
                             </Box>
-                            {params.id}
+                            <Stack spacing={2}>
+                                <TextField
+                                    id="outlined-read-only-input"
+                                    label="Название"
+                                    defaultValue="Название шаблона"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-read-only-input"
+                                    label="Владелец"
+                                    defaultValue="Владелец Иванов"
+                                    InputProps={{
+                                        readOnly: true,
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <AccountCircle />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-read-only-input"
+                                    label="Участник"
+                                    defaultValue="Участник Петров"
+                                    InputProps={{
+                                        readOnly: true,
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <PersonIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-read-only-input"
+                                    label="Участник"
+                                    defaultValue="Участник брат Петрова"
+                                    InputProps={{
+                                        readOnly: true,
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <PersonIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-read-only-input"
+                                    label="Зритель"
+                                    defaultValue="Зритель Сидоров"
+                                    InputProps={{
+                                        readOnly: true,
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <PermIdentityIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-read-only-input"
+                                    label="Зритель"
+                                    defaultValue="Зритель сестра Сидорова"
+                                    InputProps={{
+                                        readOnly: true,
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <PermIdentityIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+
+                                {/* {params.id && handleUpdateName} */}
+                            </Stack>
                         </Box>
                     </ContentStyle>
                 </Container>

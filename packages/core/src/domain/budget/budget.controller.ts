@@ -43,4 +43,20 @@ export class BudgetController implements ControllerType<BudgetController> {
         const { email } = context
         return this.budgetService.updateBudgetName(email, budget_id, name)
     }
+    
+    @ValidateControllerInput(
+        object({
+            name: string().min(1),
+            budget_id: number().defined().integer(),
+        })
+        )
+        async getBudgetInfo({
+            data,
+            context,
+        }: Input<{ budget_id: number }>) {
+            const { budget_id } = data
+            const { email } = context
+            return this.budgetService.getBudgetInfo(email, budget_id)
+        }
 }
+

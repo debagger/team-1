@@ -25,7 +25,7 @@ export class BudgetService {
         return await this.checkRole(
             user_email,
             budget_id,
-            BudgetUserRoleEnum.OWNER
+            [BudgetUserRoleEnum.OWNER]
         ).then(
             chain(async () => {
                 this.budgetPort
@@ -51,12 +51,12 @@ export class BudgetService {
     async checkRole(
         user_email: string,
         budget_id: number,
-        role: BudgetUserRoleEnum
+        role: BudgetUserRoleEnum[]
     ) {
         const users = await this.budgetPort.getBudgetUsers(budget_id)
         return users.chain((users) =>
             users.find(
-                (user) => user.user_email === user_email && user.role === role
+                (user) => user.user_email === user_email && user.role in role
             )
                 ? right(true)
                 : left(new NotFoundErrorEntity(`Недостаточно прав`))
@@ -68,9 +68,16 @@ export class BudgetService {
     }
 
     async updateBudgetName(email: string, budget_id: number, name: string) {
-        return this.checkRole(email, budget_id, BudgetUserRoleEnum.OWNER).then(
+        return this.checkRole(email, budget_id, [BudgetUserRoleEnum.OWNER]).then(
             chain(async () =>
                 this.budgetPort.updateBudget({ id: budget_id, name })
+            )
+        )
+    }
+    async getBudgetInfo(email: string, budget_id: number) {
+        return this.checkRole(email, budget_id, [BudgetUserRoleEnum.OWNER,BudgetUserRoleEnum.COLLAB,BudgetUserRoleEnum.READONLY]).then(
+            chain(async () =>
+                this.budgetPort.getBudgetInfo(budget_id)
             )
         )
     }

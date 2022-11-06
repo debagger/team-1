@@ -18,8 +18,12 @@ const BudgetsList: React.FC<Props> = ({ api }) => {
 
     const [budgets, setBudgets] = React.useState<any[]>([])
 
-    const updateBudgets = () =>
-        api.budget.getBudgets().then(async (b) => (b.isRight() ? setBudgets(b.value) : console.log(b.value)))
+    const updateBudgets = () => {
+        api.budget.getBudgets().then(async (b) => {
+            b.isRight() ? setBudgets(b.value) : console.log(b.value)
+            if (!(b.value as any[]).length) api.budget.createBudget({ name: 'Мой бюджет' }).then(updateBudgets)
+        })
+    }
 
     React.useEffect(() => {
         updateBudgets()
@@ -53,7 +57,12 @@ const BudgetsList: React.FC<Props> = ({ api }) => {
             <List>
                 {budgets.map((b) => (
                     <ListItem key={b.id}>
-                        <ListItemText primary={b.name} />
+                        <ListItemText
+                            primary={b.name}
+                            secondary={
+                                <React.Fragment>{'Владелец Иванов, Участник Петров, Зритель Сидоров'}</React.Fragment>
+                            }
+                        />
                         <IconButton onClick={() => navigate({ pathname: `/profile/budgets/${b.id}` })}>
                             <Edit />
                         </IconButton>
