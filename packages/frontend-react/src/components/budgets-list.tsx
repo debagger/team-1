@@ -7,12 +7,15 @@ import List from '@mui/material/List/List'
 import ListItem from '@mui/material/ListItem/ListItem'
 import ListItemText from '@mui/material/ListItemText/ListItemText'
 import IconButton from '@mui/material/IconButton/IconButton'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
     api: ICoreClientApi
 }
 
 const BudgetsList: React.FC<Props> = ({ api }) => {
+    const navigate = useNavigate()
+
     const [budgets, setBudgets] = React.useState<any[]>([])
 
     const updateBudgets = () =>
@@ -31,12 +34,6 @@ const BudgetsList: React.FC<Props> = ({ api }) => {
     }
 
     const [addFormData, setAddFormData] = React.useState({ name: '' })
-
-    const [editFormData, setEditFormData] = React.useState({ name: '' })
-
-    const handleUpdateName = (id: number, newName: string) => {
-        api.budget.updateBudgetName({ budget_id: id, name: newName }).then(updateBudgets)
-    }
 
     return (
         <>
@@ -57,18 +54,9 @@ const BudgetsList: React.FC<Props> = ({ api }) => {
                 {budgets.map((b) => (
                     <ListItem key={b.id}>
                         <ListItemText primary={b.name} />
-                        <DialogForm
-                            buttonIcon={<Edit />}
-                            title="Редактировать"
-                            onOk={() => handleUpdateName(b.id, editFormData.name)}
-                            onOpen={() => setEditFormData({ name: b.name })}
-                        >
-                            <TextField
-                                label="Название"
-                                value={editFormData.name}
-                                onChange={(e) => setEditFormData({ name: e.currentTarget.value })}
-                            />
-                        </DialogForm>
+                        <IconButton onClick={() => navigate({ pathname: `/profile/budgets/${b.id}` })}>
+                            <Edit />
+                        </IconButton>
                         <IconButton onClick={handleDeleteBudget(b.id)}>
                             <Delete />
                         </IconButton>

@@ -4,6 +4,7 @@ import { Container, Box, Tab, Tabs } from '@mui/material'
 import ProfileForm from '../components/profile-form'
 import { ICoreClientApi } from 'core'
 import BudgetsList from '../components/budgets-list'
+import { useNavigate } from 'react-router-dom'
 
 //////////////////////////////////
 const RootStyle = styled('div')({
@@ -52,16 +53,18 @@ function a11yProps(index: number) {
     }
 }
 
-const Profile = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
+type Props = { setAuth: any; api: ICoreClientApi; tabIndex?: number }
+
+const Profile: React.FC<Props> = ({ setAuth, api, tabIndex }) => {
     const ref = React.useRef<any>(null)
 
-    React.useEffect(() => {
-        api.transactions
-            .addTransaction({ amount: 1, budget_id: 1, name: 'test', date: new Date() })
-            .then((res) => console.log({ res }))
-    })
-    const [tabIndex, setTabIndex] = React.useState(0)
+    const navigate = useNavigate()
+
+    const [tabIndexValue, setTabIndex] = React.useState(() => (tabIndex ? tabIndex : 0))
+
     const handleTabChange = (event: React.SyntheticEvent, newTabIndex: number) => {
+        const tabLinks = ['/profile', '/profile/budgets']
+        navigate({ pathname: tabLinks[newTabIndex] })
         setTabIndex(newTabIndex)
     }
 
@@ -72,17 +75,17 @@ const Profile = ({ setAuth, api }: { setAuth: any; api: ICoreClientApi }) => {
                     <ContentStyle>
                         <Box sx={{ width: '100%' }}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs value={tabIndex} onChange={handleTabChange} aria-label="basic tabs example">
+                                <Tabs value={tabIndexValue} onChange={handleTabChange} aria-label="basic tabs example">
                                     <Tab label="Профиль" {...a11yProps(0)} />
                                     <Tab label="Бюджеты" {...a11yProps(1)} />
                                 </Tabs>
                             </Box>
 
-                            <TabPanel value={tabIndex} index={0}>
+                            <TabPanel value={tabIndexValue} index={0}>
                                 <ProfileForm api={api} setAuth={setAuth} />
                             </TabPanel>
 
-                            <TabPanel value={tabIndex} index={1}>
+                            <TabPanel value={tabIndexValue} index={1}>
                                 <BudgetsList api={api} />
                             </TabPanel>
                         </Box>
