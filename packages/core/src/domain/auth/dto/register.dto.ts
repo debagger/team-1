@@ -5,4 +5,5 @@ export const registerDto = object({
     firstName: string().defined(),
     lastName: string().defined(),
     password: string().defined(),
+    avatar: string().defined(),
 })

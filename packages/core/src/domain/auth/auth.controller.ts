@@ -22,7 +22,7 @@ export class AuthController implements ControllerType<AuthController> {
     }: Input<InferType<typeof registerDto>>): ControllerMethodOutput<IUser> {
         const { password, ...userData } = data
         return await this.authService.register(
-            { ...userData, avatar: null },
+            { ...userData },
             password
         )
     }
