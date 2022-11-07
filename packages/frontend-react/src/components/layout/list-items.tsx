@@ -50,12 +50,14 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Integrations" />
         </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <WishlistIcon />
-            </ListItemIcon>
-            <ListItemText primary="Wishlists" />
-        </ListItemButton>
+        <Link to="wishlists">
+            <ListItemButton>
+                <ListItemIcon>
+                    <WishlistIcon />
+                </ListItemIcon>
+                <ListItemText primary="Wishlists" />
+            </ListItemButton>
+        </Link>
     </React.Fragment>
 )
 

@@ -13,6 +13,7 @@ import Orders from './pages/orders'
 import Signup from './pages/signup'
 import { demoApi } from './api/demo-api'
 import BudgetEdit from './pages/budget-edit'
+import Wishlists from './pages/wishlists'
 
 const api = demoApi
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
             {
                 path: 'orders',
                 element: <Orders />,
+            },
+            {
+                path: 'wishlists',
+                element: <Wishlists />,
             },
             {
                 path: 'profile',
