@@ -33,32 +33,24 @@ describe('budget', () => {
             user_email: 'user1@test.ru',
         })
 
-        const res1 = await budgetMock.service.checkRole(
-            'user1@test.ru',
-            1,
-            BudgetUserRoleEnum.OWNER
-        )
+        const res1 = await budgetMock.service.checkRole('user1@test.ru', 1, [
+            BudgetUserRoleEnum.OWNER,
+        ])
         expect(res1.isRight()).toBe(true)
 
-        const res2 = await budgetMock.service.checkRole(
-            'user2@test.ru',
-            1,
-            BudgetUserRoleEnum.OWNER
-        )
+        const res2 = await budgetMock.service.checkRole('user2@test.ru', 1, [
+            BudgetUserRoleEnum.OWNER,
+        ])
         expect(res2.isLeft()).toBe(true)
 
-        const res3 = await budgetMock.service.checkRole(
-            'user1@test.ru',
-            1,
-            BudgetUserRoleEnum.COLLAB
-        )
+        const res3 = await budgetMock.service.checkRole('user1@test.ru', 1, [
+            BudgetUserRoleEnum.COLLAB,
+        ])
         expect(res3.isLeft()).toBe(true)
 
-        const res4 = await budgetMock.service.checkRole(
-            'user1@test.ru',
-            2,
-            BudgetUserRoleEnum.OWNER
-        )
+        const res4 = await budgetMock.service.checkRole('user1@test.ru', 2, [
+            BudgetUserRoleEnum.OWNER,
+        ])
         expect(res4.isLeft()).toBe(true)
     })
 
@@ -152,6 +144,17 @@ export function createBudgetMock() {
             budget_id: number
         ): Promise<Either<ErrorEntity, BudgetUserEntity[]>> {
             return right(budgetUsers.filter((u) => u.budget_id === budget_id))
+        },
+
+        getBudgetInfo: function (
+            budget_id: number
+        ): Promise<
+            Either<
+                ErrorEntity,
+                { info: BudgetEntity; users: BudgetUserEntity[] }
+            >
+        > {
+            throw new Error('Function not implemented.')
         },
     }
 
