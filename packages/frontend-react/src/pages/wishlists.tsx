@@ -58,8 +58,8 @@ const wishlistArray = [
 export default function Wishlists() {
     return (
         <div>
-            {wishlistArray.map((el) => (
-                <Accordion>
+            {wishlistArray.map((el, index) => (
+                <Accordion sx={{ marginBottom: '7px' }} key={el.wishlistName + index}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -78,9 +78,9 @@ export default function Wishlists() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {el.items.map((row) => (
+                                    {el.items.map((row, index) => (
                                         <TableRow
-                                            key={row.itemName}
+                                            key={row.itemName + index}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">
