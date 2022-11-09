@@ -120,7 +120,7 @@ function DashboardContent() {
                             <MenuIcon />
                         </IconButton>
                         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                            Dashboard
+                            Учёт семейных финансов "ФиСоракл"
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -129,7 +129,6 @@ function DashboardContent() {
                         </IconButton>
 
                         <IconButton color="inherit" onClick={() => navigate('/profile')}>
-                            {/* <ProfileIcon /> */}
                             <ProfileIcon api={api} />
                         </IconButton>
                     </Toolbar>
