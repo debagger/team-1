@@ -11,6 +11,7 @@ import {
     People as PeopleIcon,
     ShoppingCart as ShoppingCartIcon,
     Dashboard as DashboardIcon,
+    WorkHistory,
 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 
@@ -30,6 +31,14 @@ export const mainListItems = (
                     <ShoppingCartIcon />
                 </ListItemIcon>
                 <ListItemText primary="Orders" />
+            </ListItemButton>
+        </Link>
+        <Link to="transactions">
+            <ListItemButton>
+                <ListItemIcon>
+                    <WorkHistory />
+                </ListItemIcon>
+                <ListItemText primary="Transactions" />
             </ListItemButton>
         </Link>
         <ListItemButton>
