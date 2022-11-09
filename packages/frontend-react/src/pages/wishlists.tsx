@@ -16,7 +16,8 @@ import { Box, Button, IconButton } from '@mui/material'
 
 const wishlistArray = [
     {
-        wishlistName: 'PC and video',
+        // wishlistName: 'PC and video',
+        wishlistName: 'Техника',
         items: [
             {
                 itemName: 'TV',
@@ -36,20 +37,24 @@ const wishlistArray = [
         ],
     },
     {
-        wishlistName: 'Relax',
+        // wishlistName: 'Relax',
+        wishlistName: 'Отдых',
         items: [
             {
-                itemName: 'Hookah',
+                // itemName: 'Hookah',
+                itemName: 'Кальян',
                 price: 11000,
                 plannedFlow: '?',
             },
             {
-                itemName: 'Home lamp',
+                // itemName: 'Home lamp',
+                itemName: 'Ночник',
                 price: 5000,
                 plannedFlow: '?',
             },
             {
-                itemName: 'Soft chair',
+                // itemName: 'Soft chair',
+                itemName: 'Кресло',
                 price: 15000,
                 plannedFlow: '?',
             },
@@ -77,7 +82,8 @@ export default function Wishlists() {
                         startIcon={<DeleteIcon />}
                         sx={{ marginRight: '10px' }}
                     >
-                        Delete
+                        {/* Delete */}
+                        Удалить
                     </Button>
                     <Accordion sx={{ marginBottom: '4px', marginTop: '4px' }} key={wishlist.wishlistName + index}>
                         <AccordionSummary
@@ -92,10 +98,14 @@ export default function Wishlists() {
                                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Item&nbsp;name</TableCell>
+                                            {/* <TableCell>Item&nbsp;name</TableCell>
                                             <TableCell align="right">Price,&nbsp;RUB</TableCell>
                                             <TableCell align="right">Planned&nbsp;flow</TableCell>
-                                            <TableCell align="right">Actions</TableCell>
+                                            <TableCell align="right">Actions</TableCell> */}
+                                            <TableCell>Затраты</TableCell>
+                                            <TableCell align="right">Стоимость,&nbsp;руб.</TableCell>
+                                            <TableCell align="right">Плановая покупка</TableCell>
+                                            <TableCell align="right">Действия</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -113,7 +123,8 @@ export default function Wishlists() {
                                                     <IconButton aria-label="delete">
                                                         <DeleteIcon
                                                             onClick={() => {
-                                                                alert(row.itemName + ' deletion clicked')
+                                                                // alert(row.itemName + ' deletion clicked')
+                                                                alert('Удалить ' + row.itemName + ' ?')
                                                             }}
                                                         />
                                                     </IconButton>

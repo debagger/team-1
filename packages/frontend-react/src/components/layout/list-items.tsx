@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom'
 
 export const mainListItems = (
     <React.Fragment>
-        <Link to="dashboard">
+        {/* <Link to="dashboard">
             <ListItemButton>
                 <ListItemIcon>
                     <DashboardIcon />
@@ -32,39 +32,39 @@ export const mainListItems = (
                 </ListItemIcon>
                 <ListItemText primary="Orders" />
             </ListItemButton>
-        </Link>
+        </Link> */}
         <Link to="transactions">
             <ListItemButton>
                 <ListItemIcon>
                     <WorkHistory />
                 </ListItemIcon>
-                <ListItemText primary="Transactions" />
+                <ListItemText primary="Бюджеты" />
             </ListItemButton>
         </Link>
-        <ListItemButton>
+        {/* <ListItemButton>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Customers" />
-        </ListItemButton>
+        </ListItemButton> */}
         <ListItemButton>
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
-            <ListItemText primary="Reports" />
+            <ListItemText primary="Отчеты" />
         </ListItemButton>
-        <ListItemButton>
+        {/* <ListItemButton>
             <ListItemIcon>
                 <LayersIcon />
             </ListItemIcon>
             <ListItemText primary="Integrations" />
-        </ListItemButton>
+        </ListItemButton> */}
         <Link to="wishlists">
             <ListItemButton>
                 <ListItemIcon>
                     <WishlistIcon />
                 </ListItemIcon>
-                <ListItemText primary="Wishlists" />
+                <ListItemText primary="Крупные покупки" />
             </ListItemButton>
         </Link>
     </React.Fragment>
@@ -73,25 +73,25 @@ export const mainListItems = (
 export const secondaryListItems = (
     <React.Fragment>
         <ListSubheader component="div" inset>
-            Saved reports
+            Сохраненные отчеты
         </ListSubheader>
         <ListItemButton>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Current month" />
+            <ListItemText primary="За месяц" />
         </ListItemButton>
         <ListItemButton>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Last quarter" />
+            <ListItemText primary="За квартал" />
         </ListItemButton>
         <ListItemButton>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary="Year-end sale" />
+            <ListItemText primary="За год" />
         </ListItemButton>
     </React.Fragment>
 )

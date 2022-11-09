@@ -93,7 +93,6 @@ const Transactions: FC<Props> = ({ api }) => {
     useEffect(() => {
         api.budget.getBudgets().then((b) => {
             if (b.isRight()) {
-                debugger
                 setBudgets(b.value)
                 setSelectedBudget(b.value[0].id)
             }

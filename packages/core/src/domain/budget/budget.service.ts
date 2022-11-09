@@ -56,7 +56,7 @@ export class BudgetService {
         const users = await this.budgetPort.getBudgetUsers(budget_id)
         return users.chain((users) =>
             users.find(
-                (user) => user.user_email === user_email && user.role in role
+                (user) => user.user_email === user_email && Object.values(role).includes(user.role)
             )
                 ? right(true)
                 : left(new NotFoundErrorEntity(`Недостаточно прав`))
