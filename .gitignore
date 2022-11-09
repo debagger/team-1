@@ -102,4 +102,4 @@ typings/
 .tern-port
 
 dist/
-.$budget_db.drawio.bkp
+.drawio.bkp
