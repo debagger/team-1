@@ -8,6 +8,7 @@
     "lerna": "^5.5.4"
   },
   "dependencies": {
+    "@mui/x-date-pickers": "^5.0.7",
     "md5": "^2.3.0"
   },
   "scripts": {
