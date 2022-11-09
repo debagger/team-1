@@ -11,6 +11,8 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { Delete as DeleteIcon } from '@mui/icons-material'
+import { Box, Button, IconButton } from '@mui/material'
 
 const wishlistArray = [
     {
@@ -58,49 +60,73 @@ const wishlistArray = [
 export default function Wishlists() {
     return (
         <div>
-            {wishlistArray.map((el, index) => (
-                <Accordion sx={{ marginBottom: '7px' }} key={el.wishlistName + index}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
+            {wishlistArray.map((wishlist, index) => (
+                <Box
+                    sx={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            alert(wishlist.wishlistName + ' deletion clicked')
+                        }}
+                        startIcon={<DeleteIcon />}
+                        sx={{ marginRight: '10px' }}
                     >
-                        <Typography>{el.wishlistName}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Item&nbsp;name</TableCell>
-                                        <TableCell align="right">Price,&nbsp;RUB</TableCell>
-                                        <TableCell align="right">Planned&nbsp;flow</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {el.items.map((row, index) => (
-                                        <TableRow
-                                            key={row.itemName + index}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {row.itemName}
-                                            </TableCell>
-                                            <TableCell align="right">{row.price}</TableCell>
-                                            <TableCell align="right">{row.plannedFlow}</TableCell>
+                        Delete
+                    </Button>
+                    <Accordion sx={{ marginBottom: '4px', marginTop: '4px' }} key={wishlist.wishlistName + index}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography>{wishlist.wishlistName}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Item&nbsp;name</TableCell>
+                                            <TableCell align="right">Price,&nbsp;RUB</TableCell>
+                                            <TableCell align="right">Planned&nbsp;flow</TableCell>
+                                            <TableCell align="right">Actions</TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </AccordionDetails>
-                </Accordion>
+                                    </TableHead>
+                                    <TableBody>
+                                        {wishlist.items.map((row, index) => (
+                                            <TableRow
+                                                key={row.itemName + index}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                <TableCell component="th" scope="row">
+                                                    {row.itemName}
+                                                </TableCell>
+                                                <TableCell align="right">{row.price}</TableCell>
+                                                <TableCell align="right">{row.plannedFlow}</TableCell>
+                                                <TableCell align="right">
+                                                    <IconButton aria-label="delete">
+                                                        <DeleteIcon
+                                                            onClick={() => {
+                                                                alert(row.itemName + ' deletion clicked')
+                                                            }}
+                                                        />
+                                                    </IconButton>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </AccordionDetails>
+                    </Accordion>
+                </Box>
             ))}
-            <Accordion disabled>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3a-content" id="panel3a-header">
-                    <Typography>Inactive wishlist</Typography>
-                </AccordionSummary>
-            </Accordion>
         </div>
     )
 }
