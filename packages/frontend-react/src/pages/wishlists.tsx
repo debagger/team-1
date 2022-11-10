@@ -13,6 +13,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { Delete as DeleteIcon } from '@mui/icons-material'
 import { Box, Button, IconButton } from '@mui/material'
+import AlertDialog from '../components/alert-dialog'
 
 const wishlistArray = [
     {
@@ -63,10 +64,24 @@ const wishlistArray = [
 ]
 
 export default function Wishlists() {
+    const [open, setOpen] = React.useState(false)
+    const [text, setText] = React.useState('')
+    const [items, setItems] = React.useState(wishlistArray)
+
+    const handleClickOpen = (itemName: string) => {
+        setText(`Вы действительно хотите удалить элемент "${itemName}"?`)
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false)
+    }
     return (
         <div>
+            <AlertDialog state={open} title={'Удаление элемента'} text={text} hClose={handleClose} />
             {wishlistArray.map((wishlist, index) => (
                 <Box
+                    key={wishlist.wishlistName + index}
                     sx={{
                         width: '100%',
                         display: 'flex',
@@ -76,16 +91,14 @@ export default function Wishlists() {
                 >
                     <Button
                         variant="outlined"
-                        onClick={() => {
-                            alert(wishlist.wishlistName + ' deletion clicked')
-                        }}
+                        onClick={() => handleClickOpen(wishlist.wishlistName)}
                         startIcon={<DeleteIcon />}
                         sx={{ marginRight: '10px' }}
                     >
                         {/* Delete */}
                         Удалить
                     </Button>
-                    <Accordion sx={{ marginBottom: '4px', marginTop: '4px' }} key={wishlist.wishlistName + index}>
+                    <Accordion sx={{ marginBottom: '6px', marginTop: '6px' }} key={wishlist.wishlistName + index}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -120,13 +133,11 @@ export default function Wishlists() {
                                                 <TableCell align="right">{row.price}</TableCell>
                                                 <TableCell align="right">{row.plannedFlow}</TableCell>
                                                 <TableCell align="right">
-                                                    <IconButton aria-label="delete">
-                                                        <DeleteIcon
-                                                            onClick={() => {
-                                                                // alert(row.itemName + ' deletion clicked')
-                                                                alert('Удалить ' + row.itemName + ' ?')
-                                                            }}
-                                                        />
+                                                    <IconButton
+                                                        onClick={() => handleClickOpen(row.itemName)}
+                                                        aria-label="delete"
+                                                    >
+                                                        <DeleteIcon />
                                                     </IconButton>
                                                 </TableCell>
                                             </TableRow>
