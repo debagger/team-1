@@ -69,12 +69,14 @@ export default function Wishlists() {
     const [items, setItems] = React.useState(wishlistArray)
     const [isWishList, setIsWishList] = React.useState(true)
     const [itemName, setItemName] = React.useState('')
+    const [wlistName, setWlistName] = React.useState('')
 
-    const handleClickOpen = (itemName: string, isWishList: boolean) => {
+    const handleClickOpen = (itemName: string, isWishList: boolean, wName: string) => {
         setText(`Вы действительно хотите удалить элемент "${itemName}"?`)
         setItemName(itemName)
         setOpen(true)
         setIsWishList(isWishList)
+        setWlistName(wName)
     }
 
     const handleClose = () => {
@@ -84,6 +86,11 @@ export default function Wishlists() {
     const handleOk = () => {
         if (isWishList) {
             setItems(items.filter((el) => el.wishlistName !== itemName))
+        } else {
+            let newItems = items.find((el) => el.wishlistName === wlistName)
+            newItems!.items = newItems!.items.filter((el) => el.itemName !== itemName)
+            let updatedItems = items.filter((el) => el.wishlistName !== itemName)
+            setItems(updatedItems)
         }
         setOpen(false)
         handleClose()
@@ -104,7 +111,7 @@ export default function Wishlists() {
                 >
                     <Button
                         variant="outlined"
-                        onClick={() => handleClickOpen(wishlist.wishlistName, true)}
+                        onClick={() => handleClickOpen(wishlist.wishlistName, true, wishlist.wishlistName)}
                         startIcon={<DeleteIcon />}
                         sx={{ marginRight: '10px' }}
                     >
@@ -147,7 +154,9 @@ export default function Wishlists() {
                                                 <TableCell align="right">{row.plannedFlow}</TableCell>
                                                 <TableCell align="right">
                                                     <IconButton
-                                                        onClick={() => handleClickOpen(row.itemName, false)}
+                                                        onClick={() =>
+                                                            handleClickOpen(row.itemName, false, wishlist.wishlistName)
+                                                        }
                                                         aria-label="delete"
                                                     >
                                                         <DeleteIcon />
