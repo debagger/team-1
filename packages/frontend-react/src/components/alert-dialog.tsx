@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
 // @ts-ignore
-export default function AlertDialog({ state, title, text, hClose }) {
+export default function AlertDialog({ state, title, text, hClose, hOk }) {
     return (
         <div>
             <Dialog
@@ -22,7 +22,7 @@ export default function AlertDialog({ state, title, text, hClose }) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={hClose}>Отмена</Button>
-                    <Button onClick={hClose} autoFocus>
+                    <Button onClick={hOk} autoFocus>
                         ОК
                     </Button>
                 </DialogActions>

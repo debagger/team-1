@@ -67,19 +67,32 @@ export default function Wishlists() {
     const [open, setOpen] = React.useState(false)
     const [text, setText] = React.useState('')
     const [items, setItems] = React.useState(wishlistArray)
+    const [isWishList, setIsWishList] = React.useState(true)
+    const [itemName, setItemName] = React.useState('')
 
-    const handleClickOpen = (itemName: string) => {
+    const handleClickOpen = (itemName: string, isWishList: boolean) => {
         setText(`Вы действительно хотите удалить элемент "${itemName}"?`)
+        setItemName(itemName)
         setOpen(true)
+        setIsWishList(isWishList)
     }
 
     const handleClose = () => {
         setOpen(false)
     }
+
+    const handleOk = () => {
+        if (isWishList) {
+            setItems(items.filter((el) => el.wishlistName !== itemName))
+        }
+        setOpen(false)
+        handleClose()
+    }
+
     return (
         <div>
-            <AlertDialog state={open} title={'Удаление элемента'} text={text} hClose={handleClose} />
-            {wishlistArray.map((wishlist, index) => (
+            <AlertDialog state={open} title={'Удаление элемента'} text={text} hClose={handleClose} hOk={handleOk} />
+            {items.map((wishlist, index) => (
                 <Box
                     key={wishlist.wishlistName + index}
                     sx={{
@@ -91,7 +104,7 @@ export default function Wishlists() {
                 >
                     <Button
                         variant="outlined"
-                        onClick={() => handleClickOpen(wishlist.wishlistName)}
+                        onClick={() => handleClickOpen(wishlist.wishlistName, true)}
                         startIcon={<DeleteIcon />}
                         sx={{ marginRight: '10px' }}
                     >
@@ -134,7 +147,7 @@ export default function Wishlists() {
                                                 <TableCell align="right">{row.plannedFlow}</TableCell>
                                                 <TableCell align="right">
                                                     <IconButton
-                                                        onClick={() => handleClickOpen(row.itemName)}
+                                                        onClick={() => handleClickOpen(row.itemName, false)}
                                                         aria-label="delete"
                                                     >
                                                         <DeleteIcon />
