@@ -18,6 +18,8 @@ import { BudgetService } from './domain/budget/budget.service'
 import { BudgetController } from './domain/budget/budget.controller'
 import { TransactionsController } from './domain/transactions/transactions.controller'
 import { TransactionsService } from './domain/transactions/transactions.service'
+import { PlanService } from './domain/plan/plan.service'
+import { PlanController } from './domain/plan/plan.controller'
 
 export type ApiModuleName = Extract<keyof InternalApi, string>
 
@@ -63,13 +65,15 @@ export function getCoreApiRequest(ports: IPorts): ApiRequest {
     const authService = new AuthService(ports.auth, userService)
     const budgetService = new BudgetService(ports.budget)
     const transactionsService = new TransactionsService(ports.transaction)
+    const planService = new PlanService(ports.plan)
 
     const users = new UserController(userService)
     const auth = new AuthController(authService)
     const budget = new BudgetController(budgetService)
     const transactions = new TransactionsController(transactionsService)
+    const plan = new PlanController(planService)
 
-    const api: InternalApi = { users, auth, budget, transactions }
+    const api: InternalApi = { users, auth, budget, transactions, plan }
 
     const request: ApiRequest = (async (
         moduleName: string,
