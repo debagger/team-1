@@ -11,6 +11,7 @@ import {
     People as PeopleIcon,
     ShoppingCart as ShoppingCartIcon,
     Dashboard as DashboardIcon,
+    CalendarMonth as PlanIcon,
     WorkHistory,
 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
@@ -65,6 +66,14 @@ export const mainListItems = (
                     <WishlistIcon />
                 </ListItemIcon>
                 <ListItemText primary="Крупные покупки" />
+            </ListItemButton>
+        </Link>
+        <Link to="plan">
+            <ListItemButton>
+                <ListItemIcon>
+                    <PlanIcon />
+                </ListItemIcon>
+                <ListItemText primary="План" />
             </ListItemButton>
         </Link>
     </React.Fragment>

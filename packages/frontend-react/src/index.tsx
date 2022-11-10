@@ -15,6 +15,8 @@ import { demoApi } from './api/demo-api'
 import BudgetEdit from './pages/budget-edit'
 import Wishlists from './pages/wishlists'
 import Transactions from './pages/transactions'
+import Plan from './components/plan/plan'
+import PlanEntityEdit from './components/plan/plan.entity.edit'
 
 const api = demoApi
 
@@ -52,6 +54,18 @@ const router = createBrowserRouter([
                 path: 'profile/budgets/:id',
                 element: <BudgetEdit api={api} />,
             },
+            {
+                path: 'plan',
+                element: <Plan api={api} />,
+            },
+            {
+                path: 'plan/add',
+                element: <PlanEntityEdit api={api} />,
+            },            
+            {
+                path: 'plan/edit/:id',
+                element: <PlanEntityEdit api={api} />,
+            }, 
         ],
     },
     {
