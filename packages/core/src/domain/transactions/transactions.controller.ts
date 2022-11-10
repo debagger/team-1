@@ -35,8 +35,6 @@ export class TransactionsController
         })
     )
     async getTransactions(input: Input<{ budget_id: number }>) {
-        return right([] as TransactionEntity[]).mapLeft(
-            () => new ErrorEntity('Никогда')
-        )
+        return this.transService.getTransactionByBudgetId(input.data.budget_id)
     }
 }

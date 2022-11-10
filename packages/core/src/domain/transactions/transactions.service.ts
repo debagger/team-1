@@ -14,4 +14,8 @@ export class TransactionsService {
     ) {
         return this.transPort.addTransaction({ ...data, user_email })
     }
+
+    async getTransactionByBudgetId(budget_id: number) {
+        return this.transPort.getTransactionByBudgetId(budget_id)
+    }
 }

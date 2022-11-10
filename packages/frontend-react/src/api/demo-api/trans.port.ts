@@ -4,7 +4,17 @@ import { ITransPort } from 'core/dist/domain/transactions/transactions.port'
 import { withLocalStorage } from './with-local-storage.helper'
 
 export class TransPort implements ITransPort {
+    async getTransactionByBudgetId(budget_id: number): Promise<Either<ErrorEntity, TransactionEntity[]>> {
+        return this.withTrans((items) => {
+            return right(
+                Object.values(items)
+                    .filter((i) => i.budget_id === budget_id)
+                    .map((i) => ({ ...i, date: new Date(i.date) }))
+            )
+        })
+    }
     private withTrans = withLocalStorage<TransactionEntity>('transactions')
+
     async addTransaction(data: {
         user_email: string
         budget_id: number

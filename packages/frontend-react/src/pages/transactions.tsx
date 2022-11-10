@@ -85,6 +85,7 @@ const Transactions: FC<Props> = ({ api }) => {
     const loadTransactions = async () => {
         await api.transactions.getTransactions({ budget_id: selectedBudget }).then((data) =>
             data.mapRight((tr) => {
+                tr.sort((a, b) => a.date.getMilliseconds() - b.date.getMilliseconds())
                 setTransactions(tr)
             })
         )
@@ -97,6 +98,9 @@ const Transactions: FC<Props> = ({ api }) => {
                 setSelectedBudget(b.value[0].id)
             }
         })
+    }, [])
+
+    useEffect(() => {
         loadTransactions()
     }, [selectedBudget])
 
@@ -124,6 +128,7 @@ const Transactions: FC<Props> = ({ api }) => {
             </IconButton>
 
             <Fragment>
+                Бюджет:{' '}
                 <Select
                     label="Бюджет"
                     value={selectedBudget}
@@ -137,7 +142,6 @@ const Transactions: FC<Props> = ({ api }) => {
                         </MenuItem>
                     ))}
                 </Select>
-
                 <Table size="small">
                     <TableHead>
                         <TableRow key={0}>
@@ -150,14 +154,13 @@ const Transactions: FC<Props> = ({ api }) => {
                     <TableBody>
                         {pages.currentData().map((row: TransactionEntity) => (
                             <TableRow key={row.id + 1}>
-                                <TableCell>{row.date.toLocaleDateString()}</TableCell>
+                                <TableCell>{new Date(row.date).toLocaleDateString()}</TableCell>
                                 <TableCell>{row.name}</TableCell>
                                 <TableCell>{row.amount}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-
                 {transactions.length > itemsPerPage && (
                     <Box alignItems="center" justifyContent="center" display="flex" marginTop={1}>
                         <Pagination
