@@ -1,4 +1,4 @@
-import { ErrorEntity } from '../error/entities/ErrorEntity'
+import { ErrorEntity } from '../../errors/entities/error.entity'
 import { IUser } from './IUser'
 
 export type UpdateUserData = Omit<IUser, 'email'>

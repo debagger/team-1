@@ -1,5 +1,5 @@
 import { IUser } from '../IUser'
-import { UserService } from '../UserService'
+import { UserService } from '../user.service'
 
 describe('UserService', () => {
     let users: Map<string, IUser>
@@ -15,7 +15,7 @@ describe('UserService', () => {
             email: 'testmail',
             firstName: 'fn',
             lastName: 'ln',
-            avatar: '/logo192.png'
+            avatar: '/logo192.png',
         }
 
         await userService.createUser(user)
